@@ -1,9 +1,9 @@
 package pp.block1.cc.dfa;
 
-import static pp.block1.cc.dfa.State.ID6_DFA;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import static pp.block1.cc.dfa.State.ID6_DFA;
 
 /** Test class for Checker implementation. */
 public class CheckerTest {
