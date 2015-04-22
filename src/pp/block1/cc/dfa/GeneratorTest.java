@@ -9,7 +9,7 @@ import org.junit.Test;
 
 /** Test class for Checker implementation. */
 public class GeneratorTest {
-	private Generator myGen = // instantiate your Generator implementation
+	private Generator myGen = null; // instantiate your Generator implementation
 
 	@Test
 	public void testID6() {
