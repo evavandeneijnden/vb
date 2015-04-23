@@ -3,6 +3,7 @@ package pp.block1.cc.dfa;
 import org.junit.Assert;
 import org.junit.Test;
 
+import static pp.block1.cc.dfa.State.DFA_LALA;
 import static pp.block1.cc.dfa.State.ID6_DFA;
 
 /** Test class for Checker implementation. */
@@ -18,6 +19,24 @@ public class CheckerTest {
 		rejects("a12 456");
 		rejects("a123456");
 		rejects("123456");
+	}
+
+	@Test
+	public void testLALALALALALALA(){
+		dfa = DFA_LALA;
+		accepts("La");
+		accepts("La La");
+		rejects("La La Li");
+		rejects("La Li");
+		rejects("La La La La Li");
+		rejects("La Li");
+		rejects("Li");
+		rejects("La La La");
+		accepts("");
+		rejects("La La La La");
+		accepts("Laaaaaaaa");
+		accepts("La La La Li");
+		accepts("Laaaa    La LaaaaaaLi");
 	}
 
 
