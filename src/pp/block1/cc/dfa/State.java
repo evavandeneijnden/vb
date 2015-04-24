@@ -112,8 +112,6 @@ public class State {
 		State li1 = new State(51,false);
 		State li2 = new State(52,true);
 
-//		State[] states = {DFA_LALA,la1_1,la1_2,la1_3,la2_1,la2_2,la2_3,la3_1,la3_2,la3_3,li1,li2};
-
 		DFA_LALA.addNext('L',la1_1);
 		la1_1.addNext('a',la1_2);
 		la1_2.addNext('a',la1_2);
