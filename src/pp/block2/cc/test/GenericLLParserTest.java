@@ -1,25 +1,22 @@
 package pp.block2.cc.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Lexer;
 import org.junit.Test;
-
 import pp.block2.cc.AST;
 import pp.block2.cc.ParseException;
 import pp.block2.cc.Parser;
 import pp.block2.cc.ll.GenericLLParser;
 import pp.block2.cc.ll.Grammars;
 import pp.block2.cc.ll.Sentence;
-import pp.block2.cc.antlr.SentenceParser;
-import pp.block2.cc.ll.XL;
-import pp.block2.cc.ll.XLParser;
+import pp.block2.cc.ll.SentenceParser;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class GenericLLParserTest {
 	@Test
