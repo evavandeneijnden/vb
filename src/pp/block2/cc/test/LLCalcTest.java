@@ -4,10 +4,7 @@ import org.junit.Test;
 import pp.block2.cc.NonTerm;
 import pp.block2.cc.Symbol;
 import pp.block2.cc.Term;
-import pp.block2.cc.ll.Grammar;
-import pp.block2.cc.ll.Grammars;
-import pp.block2.cc.ll.LLCalc;
-import pp.block2.cc.ll.Sentence;
+import pp.block2.cc.ll.*;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -48,7 +45,7 @@ public class LLCalcTest {
 
 	/** Creates an LL1-calculator for a given grammar. */
 	private LLCalc createCalc(Grammar g) {
-		return null; // your implementation of LLCalc
+		return new MyLLCalc(g); // your implementation of LLCalc
 	}
 
 	@SuppressWarnings("unchecked")
