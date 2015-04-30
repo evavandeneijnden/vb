@@ -1,11 +1,11 @@
 package pp.block2.cc;
 
-import org.antlr.v4.runtime.Lexer;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.antlr.v4.runtime.Lexer;
 
 /**
  * Functionality to retrieve the token names from an Antlr-generated scanner.
