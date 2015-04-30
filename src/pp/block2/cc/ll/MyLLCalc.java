@@ -22,13 +22,48 @@ public class MyLLCalc implements LLCalc {
     @Override
     public Map<Symbol, Set<Term>> getFirst() {
         Map<Symbol, Set<Term>> first = new HashMap<>();
+        int iterationsSinceChange = 0;
+
+
         for (Term t : grammar.getTerminals()) {
             System.out.println(t);
             Set<Term> temp = new HashSet<>();
             temp.add(t);
             first.put(t, temp);
         }
-//        Term eof = new Term();
+
+        for (NonTerm nt: grammar.getNonterminals()){
+            Set<Term> temp = new HashSet<>();
+            first.put(nt,temp);
+        }
+        while (iterationsSinceChange < first.size()){
+            for (Rule r : grammar.getRules()){
+                Set<Term> rhs = new HashSet<>();
+                int i = -1;
+                int k = r.getRHS().size();
+                if (k > 1){
+                    rhs = first.get(r.getRHS().get(0));
+                    i = 0;
+
+                    while (first.get(r.getRHS().get(i)).contains(Symbol.EMPTY) && i<k-1){
+                        rhs.addAll(first.get(r.getRHS().get(i+1)));
+                        if (rhs.contains(Symbol.EMPTY)){
+                            rhs.remove(Symbol.EMPTY);
+                        }
+                        i++;
+                    }
+                }
+                else {
+                    if (first.get(r.getRHS().get(k)).contains(Symbol.EMPTY) && i+1==k){
+                        rhs.add(Symbol.EMPTY);
+                    }
+                }
+            }
+
+
+            iterationsSinceChange ++;
+        }
+
 
 
         return null;
