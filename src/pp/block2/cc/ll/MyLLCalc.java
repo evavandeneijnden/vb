@@ -56,7 +56,7 @@ public class MyLLCalc implements LLCalc {
                         i++;
                     }
                 } else {
-                    if (i + 1 == k && first.get(r.getRHS().get(k-1)).contains(Symbol.EMPTY)) {
+                    if (first.get(r.getRHS().get(k)).contains(Symbol.EMPTY) && i + 1 == k) {
                         rhs.add(Symbol.EMPTY);
                     }
                 }
@@ -111,17 +111,18 @@ public class MyLLCalc implements LLCalc {
     @Override
     public Map<Rule, Set<Term>> getFirstp() {
         Map<NonTerm, Set<Term>> follow = getFollow();
-        Map<Rule, Set<Term>> firstP = new HashMap<>();
+        Map<Symbol, Set<Term>> first = getFirst();
+        Map<Rule,Set<Term>> firstP = new HashMap<>();
 
-        for (Rule r : grammar.getRules()) {
-            if (r.getRHS().contains(Symbol.EMPTY)) {
-                Set<Symbol> newRHS = new HashSet<>(r.getRHS());
-                newRHS.addAll(follow.get(r.getLHS()));
-//                firstP.put(r, newRHS);
+        for (Rule r: grammar.getRules()){
+
+            Symbol firstSymbol = r.getRHS().get(0);
+            if (r.getRHS().contains(Symbol.EMPTY)){
+
             }
         }
 
-        return firstP;
+        return getFirstp();
     }
 
     @Override
