@@ -118,7 +118,13 @@ public class MyLLCalc implements LLCalc {
 
             Symbol firstSymbol = r.getRHS().get(0);
             if (r.getRHS().contains(Symbol.EMPTY)){
-
+                Set<Term> temp = new HashSet<>();
+                temp.addAll(first.get(firstSymbol));
+                temp.addAll(follow.get(firstSymbol));
+                firstP.put(r,temp);
+            }
+            else {
+                firstP.put(r,first.get(firstSymbol));
             }
         }
 
