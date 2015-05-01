@@ -118,7 +118,7 @@ public class MyLLCalc implements LLCalc {
                 Set<Term> temp = new HashSet<>();
                 temp.addAll(first.get(firstSymbol));
                 temp.addAll(follow.get(firstSymbol));
-                firstP.put(r,temp);
+                firstP.put(r, temp);
             }
             else {
                 firstP.put(r,first.get(firstSymbol));
@@ -130,6 +130,13 @@ public class MyLLCalc implements LLCalc {
 
     @Override
     public boolean isLL1() {
+        Map<NonTerm, Set<Rule>> resultMap = new HashMap<>();
+        for (NonTerm nt: grammar.getNonterminals()){
+            Set<Rule> row = new HashSet<>();
+            for (Term t: grammar.getTerminals()){
+
+            }
+        }
         return false;
     }
 }
