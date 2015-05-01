@@ -32,14 +32,22 @@ public class LLCalcTest {
 		Term verb = g.getTerminal(Sentence.VERB);
 		Term end = g.getTerminal(Sentence.ENDMARK);
 		assertEquals(set(adj, noun), calc.getFirst().get(sent));
+		System.out.println("1");
 		assertEquals(set(adj, noun), calc.getFirst().get(subj));
+		System.out.println("2");
 		assertEquals(set(adj, noun), calc.getFirst().get(obj));
+		System.out.println("3");
 		assertEquals(set(adj), calc.getFirst().get(mod));
+		System.out.println("first done");
 		// FOLLOW sets
 		assertEquals(set(Symbol.EOF), calc.getFollow().get(sent));
+		System.out.println("4");
 		assertEquals(set(verb), calc.getFollow().get(subj));
+		System.out.println("5");
 		assertEquals(set(end), calc.getFollow().get(obj));
+		System.out.println("6");
 		assertEquals(set(noun, adj), calc.getFollow().get(mod));
+		System.out.println("follow done");
 		// is-LL1-test
 		assertFalse(calc.isLL1());
 	}

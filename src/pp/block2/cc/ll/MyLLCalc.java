@@ -22,11 +22,8 @@ public class MyLLCalc implements LLCalc {
     @Override
     public Map<Symbol, Set<Term>> getFirst() {
         Map<Symbol, Set<Term>> first = new HashMap<>();
-        boolean hasChanged = true;
-
 
         for (Term t : grammar.getTerminals()) {
-            System.out.println(t);
             Set<Term> temp = new HashSet<>();
             temp.add(t);
             first.put(t, temp);
@@ -36,30 +33,30 @@ public class MyLLCalc implements LLCalc {
             first.put(nt, new HashSet<Term>());
         }
 
+        boolean hasChanged = true;
         while (hasChanged) {
             hasChanged = false;
             for (Rule r : grammar.getRules()) {
-                Set<Term> rhs = new HashSet<>();
-                int i = -1;
-                int k = r.getRHS().size();
-                if (k > 1) {
-                    rhs = first.get(r.getRHS().get(0));
-                    i = 0;
+                Set<Term> lhs = first.get(r.getLHS());
+                Set<Term> rhs = new HashSet<>(first.get(r.getRHS().get(0)));
+                rhs.remove(Symbol.EMPTY);
 
-                    while (first.get(r.getRHS().get(i)).contains(Symbol.EMPTY) && i < k - 1) {
-                        int temp = rhs.size();
-                        rhs.addAll(first.get(r.getRHS().get(i + 1)));
-                        hasChanged |= temp != rhs.size();
-                        if (rhs.contains(Symbol.EMPTY)) {
-                            rhs.remove(Symbol.EMPTY);
-                        }
-                        i++;
+                int i = 1;
+                int k = r.getRHS().size();
+
+                while (first.get(r.getRHS().get(i - 1)).contains(Symbol.EMPTY) && i < k) {
+                    rhs.addAll(first.get(r.getRHS().get(i)));
+                    if (rhs.contains(Symbol.EMPTY)) {
+                        rhs.remove(Symbol.EMPTY);
                     }
-                } else {
-                    if (first.get(r.getRHS().get(k)).contains(Symbol.EMPTY) && i + 1 == k) {
-                        rhs.add(Symbol.EMPTY);
-                    }
+                    i++;
                 }
+                if (i == k && first.get(r.getRHS().get(k - 1)).contains(Symbol.EMPTY)) {
+                    rhs.add(Symbol.EMPTY);
+                }
+                int temp = lhs.size();
+                lhs.addAll(rhs);
+                hasChanged |= temp != lhs.size();
             }
         }
         return first;
@@ -80,12 +77,12 @@ public class MyLLCalc implements LLCalc {
         while (hasChanged) {
             hasChanged = false;
             Set<Term> trailer = new HashSet<>();
-            int k = follow.size();
             for (Rule r : grammar.getRules()) {
+                int k = r.getRHS().size();
+                trailer = new HashSet<>(follow.get(r.getLHS()));
 
-                trailer = follow.get(r.getLHS());
-                for (int i = k; 0 <= i; i--) {
-                    Symbol b = r.getRHS().get(i);
+                for (int i = k; 0 < i; i--) {
+                    Symbol b = r.getRHS().get(i-1);
                     if (b instanceof NonTerm) {
                         int temp = follow.get(b).size();
                         follow.get(b).addAll(trailer);
@@ -128,7 +125,7 @@ public class MyLLCalc implements LLCalc {
             }
         }
 
-        return getFirstp();
+        return firstP;
     }
 
     @Override
