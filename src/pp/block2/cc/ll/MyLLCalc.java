@@ -66,7 +66,6 @@ public class MyLLCalc implements LLCalc {
     public Map<NonTerm, Set<Term>> getFollow() {
         Map<Symbol, Set<Term>> first = getFirst();
         Map<NonTerm, Set<Term>> follow = new HashMap<>();
-        boolean hasChanged = true;
 
         for (NonTerm nt : grammar.getNonterminals()) {
             follow.put(nt, new HashSet<Term>());
@@ -74,22 +73,23 @@ public class MyLLCalc implements LLCalc {
 
         follow.get(grammar.getStart()).add(Symbol.EOF);
 
+        boolean hasChanged = true;
         while (hasChanged) {
             hasChanged = false;
-            Set<Term> trailer = new HashSet<>();
             for (Rule r : grammar.getRules()) {
                 int k = r.getRHS().size();
-                trailer = new HashSet<>(follow.get(r.getLHS()));
+                Set<Term> trailer = new HashSet<>(follow.get(r.getLHS()));
 
                 for (int i = k; 0 < i; i--) {
                     Symbol b = r.getRHS().get(i-1);
                     if (b instanceof NonTerm) {
-                        int temp = follow.get(b).size();
-                        follow.get(b).addAll(trailer);
-                        hasChanged |= temp == follow.get(b).size();
+                        Set<Term> fa = follow.get(b);
+                        int temp = fa.size();
+                        fa.addAll(trailer);
+                        hasChanged |= temp != fa.size();
 
                         Set<Term> bFirst = new HashSet<>(first.get(b));
-                        if (bFirst.contains(Symbol.EMPTY)) {
+                        if (first.get(b).contains(Symbol.EMPTY)) {
                             bFirst.remove(Symbol.EMPTY);
                             trailer.addAll(bFirst);
                         } else {
@@ -99,7 +99,6 @@ public class MyLLCalc implements LLCalc {
                         trailer = new HashSet<>(first.get(b));
                     }
                 }
-
             }
         }
         return follow;
