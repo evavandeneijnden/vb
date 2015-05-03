@@ -129,13 +129,43 @@ public class MyLLCalc implements LLCalc {
 
     @Override
     public boolean isLL1() {
-        Map<NonTerm, Set<Rule>> resultMap = new HashMap<>();
+        boolean result = true;
+        Map<Rule, Set<Term>> firstp = getFirstp();
+        Map<Map<NonTerm,Term>, Set<Rule>> resultMap = new HashMap<>();
         for (NonTerm nt: grammar.getNonterminals()){
-            Set<Rule> row = new HashSet<>();
-            for (Term t: grammar.getTerminals()){
-
+            for (Term t:grammar.getTerminals()){
+                Set<Rule> emptySet = new HashSet<>();
+                Map<NonTerm,Term> map = new HashMap<>();
+                map.put(nt,t);
+                resultMap.put(map,emptySet);
+            }
+            for (Rule r: grammar.getRules()){
+                for (Term t: firstp.get(r)){
+                    Map <NonTerm,Term> tempMap = new HashMap<>();
+                    tempMap.put(nt,t);
+                    Set<Rule> tableValues = resultMap.get(tempMap);
+                    tableValues.add(r);
+                    resultMap.remove(tempMap);
+                    resultMap.put(tempMap,tableValues);
+                }
+                if (firstp.get(r).contains(Symbol.EOF)){
+                    Map <NonTerm,Term> tempMap = new HashMap<>();
+                    tempMap.put(nt, Symbol.EOF);
+                    Set<Rule> tableValues = resultMap.get(tempMap);
+                    tableValues.add(r);
+                    resultMap.remove(tempMap);
+                    resultMap.put(tempMap,tableValues);
+                }
             }
         }
-        return false;
+
+        for(Map<NonTerm,Term> tableEntry:resultMap.keySet()){
+            int noOfEntries = resultMap.get(tableEntry).size();
+            if (noOfEntries != 1){
+                result = false;
+            }
+        }
+
+        return result;
     }
 }
