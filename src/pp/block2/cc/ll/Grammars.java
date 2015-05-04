@@ -61,4 +61,31 @@ public class Grammars {
         g.addRule(elsePart, Symbol.EMPTY);
         return g;
     }
+
+    public static Grammar makeABCshizzle() {
+        // NT
+        NonTerm l = new NonTerm("L");
+        NonTerm r = new NonTerm("L");
+        NonTerm p = new NonTerm("L");
+        NonTerm o = new NonTerm("L");
+
+        // T
+        SymbolFactory term = new SymbolFactory(ABC.class);
+        Term a = term.getTerminal(ABC.A);
+        Term b = term.getTerminal(ABC.B);
+        Term c = term.getTerminal(ABC.C);
+
+        // G
+        Grammar g = new Grammar(l);
+        g.addRule(l,r,a);
+        g.addRule(l,b,o,c);
+        g.addRule(r,a,b,a,p);
+        g.addRule(r,c,a,b,a,p);
+        g.addRule(p,b,c,p);
+        g.addRule(p,Symbol.EMPTY);
+        g.addRule(o,b);
+        g.addRule(o,Symbol.EMPTY);
+
+        return g;
+    }
 }

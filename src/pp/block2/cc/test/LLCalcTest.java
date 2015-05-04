@@ -55,6 +55,31 @@ public class LLCalcTest {
 		assertFalse(calc.isLL1());
 	}
 
+	@Test
+	public void testIf() {
+		Grammar g = Grammars.makeIfStatement();
+
+		// NT
+		NonTerm stat = g.getNonterminal("Stat");
+		NonTerm elsePart = g.getNonterminal("ElsePart");
+
+		// T
+		Term ifT = g.getTerminal(If.IF);
+		Term then = g.getTerminal(If.THEN);
+		Term cond = g.getTerminal(If.COND);
+		Term elseT = g.getTerminal(If.ELSE);
+		Term assign = g.getTerminal(If.ASSIGN);
+		Term eof = Symbol.EOF;
+		Term empty = Symbol.EMPTY;
+
+
+	}
+
+	@Test
+	public void testABC() {
+		Grammar g = Grammars.makeABCshizzle();
+	}
+
 	/** Creates an LL1-calculator for a given grammar. */
 	private LLCalc createCalc(Grammar g) {
 		return new MyLLCalc(g); // your implementation of LLCalc
