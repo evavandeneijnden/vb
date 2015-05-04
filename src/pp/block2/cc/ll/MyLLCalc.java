@@ -128,42 +128,22 @@ public class MyLLCalc implements LLCalc {
     @Override
     public boolean isLL1() {
         Map<Rule, Set<Term>> firstp = getFirstp();
-        Map<Map<NonTerm, Term>, Set<Rule>> resultMap = new HashMap<>();
         for (NonTerm nt : grammar.getNonterminals()) {
-            for (Term t : grammar.getTerminals()) {
-                Set<Rule> emptySet = new HashSet<>();
-                Map<NonTerm, Term> map = new HashMap<>();
-                map.put(nt, t);
-                resultMap.put(map, emptySet);
-            }
-            for (Rule r : grammar.getRules()) {
+            HashMap<Term, Rule> ntmap = new HashMap<>();
+            for (Rule r : grammar.getRules(nt)) {
                 for (Term t : firstp.get(r)) {
-                    Map<NonTerm, Term> tempMap = new HashMap<>();
-                    tempMap.put(nt, t);
-                    Set<Rule> tableValues = resultMap.get(tempMap);
-                    tableValues.add(r);
-                    resultMap.remove(tempMap);
-                    resultMap.put(tempMap, tableValues);
+                    if (ntmap.containsKey(t))
+                        return false;
+                    ntmap.put(t, r);
                 }
                 if (firstp.get(r).contains(Symbol.EOF)) {
-                    Map<NonTerm, Term> tempMap = new HashMap<>();
-                    tempMap.put(nt, Symbol.EOF);
-                    Set<Rule> tableValues = resultMap.get(tempMap);
-                    tableValues.add(r);
-                    resultMap.remove(tempMap);
-                    resultMap.put(tempMap, tableValues);
+                    if (ntmap.containsKey(Symbol.EOF))
+                        return false;
+                    ntmap.put(Symbol.EOF, r);
                 }
             }
         }
 
-        boolean result = true;
-        for (Map<NonTerm, Term> tableEntry : resultMap.keySet()) {
-            int noOfEntries = resultMap.get(tableEntry).size();
-            if (noOfEntries != 1) {
-                result = false;
-            }
-        }
-
-        return result;
+        return true;
     }
 }
