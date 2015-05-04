@@ -81,7 +81,7 @@ public class MyLLCalc implements LLCalc {
                 Set<Term> trailer = new HashSet<>(follow.get(r.getLHS()));
 
                 for (int i = k; 0 < i; i--) {
-                    Symbol b = r.getRHS().get(i-1);
+                    Symbol b = r.getRHS().get(i - 1);
                     if (b instanceof NonTerm) {
                         Set<Term> fa = follow.get(b);
                         int temp = fa.size();
@@ -108,60 +108,58 @@ public class MyLLCalc implements LLCalc {
     public Map<Rule, Set<Term>> getFirstp() {
         Map<NonTerm, Set<Term>> follow = getFollow();
         Map<Symbol, Set<Term>> first = getFirst();
-        Map<Rule,Set<Term>> firstP = new HashMap<>();
+        Map<Rule, Set<Term>> firstP = new HashMap<>();
 
-        for (Rule r: grammar.getRules()){
-
+        for (Rule r : grammar.getRules()) {
             Symbol firstSymbol = r.getRHS().get(0);
-            if (r.getRHS().contains(Symbol.EMPTY)){
-                Set<Term> temp = new HashSet<>();
-                temp.addAll(first.get(firstSymbol));
-                temp.addAll(follow.get(firstSymbol));
+            Set<Term> firstFirst = first.get(firstSymbol);
+            if (firstFirst.contains(Symbol.EMPTY)) {
+                Set<Term> temp = new HashSet<>(follow.get(r.getLHS()));
+                temp.addAll(firstFirst);
+                temp.remove(Symbol.EMPTY);
                 firstP.put(r, temp);
-            }
-            else {
-                firstP.put(r,first.get(firstSymbol));
+            } else {
+                firstP.put(r, firstFirst);
             }
         }
-
         return firstP;
     }
 
     @Override
     public boolean isLL1() {
-        boolean result = true;
         Map<Rule, Set<Term>> firstp = getFirstp();
-        Map<Map<NonTerm,Term>, Set<Rule>> resultMap = new HashMap<>();
-        for (NonTerm nt: grammar.getNonterminals()){
-            for (Term t:grammar.getTerminals()){
+        Map<Map<NonTerm, Term>, Set<Rule>> resultMap = new HashMap<>();
+        for (NonTerm nt : grammar.getNonterminals()) {
+            for (Term t : grammar.getTerminals()) {
                 Set<Rule> emptySet = new HashSet<>();
-                Map<NonTerm,Term> map = new HashMap<>();
-                map.put(nt,t);
-                resultMap.put(map,emptySet);
+                Map<NonTerm, Term> map = new HashMap<>();
+                map.put(nt, t);
+                resultMap.put(map, emptySet);
             }
-            for (Rule r: grammar.getRules()){
-                for (Term t: firstp.get(r)){
-                    Map <NonTerm,Term> tempMap = new HashMap<>();
-                    tempMap.put(nt,t);
+            for (Rule r : grammar.getRules()) {
+                for (Term t : firstp.get(r)) {
+                    Map<NonTerm, Term> tempMap = new HashMap<>();
+                    tempMap.put(nt, t);
                     Set<Rule> tableValues = resultMap.get(tempMap);
                     tableValues.add(r);
                     resultMap.remove(tempMap);
-                    resultMap.put(tempMap,tableValues);
+                    resultMap.put(tempMap, tableValues);
                 }
-                if (firstp.get(r).contains(Symbol.EOF)){
-                    Map <NonTerm,Term> tempMap = new HashMap<>();
+                if (firstp.get(r).contains(Symbol.EOF)) {
+                    Map<NonTerm, Term> tempMap = new HashMap<>();
                     tempMap.put(nt, Symbol.EOF);
                     Set<Rule> tableValues = resultMap.get(tempMap);
                     tableValues.add(r);
                     resultMap.remove(tempMap);
-                    resultMap.put(tempMap,tableValues);
+                    resultMap.put(tempMap, tableValues);
                 }
             }
         }
 
-        for(Map<NonTerm,Term> tableEntry:resultMap.keySet()){
+        boolean result = true;
+        for (Map<NonTerm, Term> tableEntry : resultMap.keySet()) {
             int noOfEntries = resultMap.get(tableEntry).size();
-            if (noOfEntries != 1){
+            if (noOfEntries != 1) {
                 result = false;
             }
         }
