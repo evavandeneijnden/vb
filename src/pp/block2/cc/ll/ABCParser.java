@@ -5,18 +5,38 @@ import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.Token;
 import pp.block2.cc.*;
-import pp.block2.cc.ll.ABC.*;
 
 import java.util.List;
 
-import static pp.block2.cc.ll.Sentence.*;
-
 public class ABCParser implements Parser {
+    private static final NonTerm L = new NonTerm("L");
+    private static final NonTerm R = new NonTerm("R");
+    private static final NonTerm P = new NonTerm("P");
+    private static final NonTerm O = new NonTerm("O");
+    private final SymbolFactory fact;
+    private List<? extends Token> tokens;
+    private int index;
+
     public ABCParser() {
         this.fact = new SymbolFactory(ABC.class);
     }
 
-    private final SymbolFactory fact;
+    public static void main(String[] args) {
+        if (args.length == 0) {
+            System.err.println("Usage: [text]+");
+        } else {
+            for (String text : args) {
+                CharStream stream = new ANTLRInputStream(text);
+                Lexer lexer = new Sentence(stream);
+                try {
+                    System.out.printf("Parse tree: %n%s%n",
+                            new SentenceParser().parse(lexer));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
     @Override
     public AST parse(Lexer lexer) throws ParseException {
@@ -52,10 +72,13 @@ public class ABCParser implements Parser {
     }
 
     private AST parseO() throws ParseException {
-
+        AST result = new AST(L);
+        Token next = peek();
+        if (next.getType() == ABC.B) {
+            result.addChild(parseToken(ABC.B));
+        }
+        return result;
     }
-
-    private List<? extends Token> tokens;
 
     private ParseException unparsable(NonTerm nt) {
         try {
@@ -100,29 +123,5 @@ public class ABCParser implements Parser {
                     fact.get(tokenType), fact.get(next.getType())));
         }
         return new AST(fact.getTerminal(tokenType), next);
-    }
-
-    private int index;
-
-    private static final NonTerm L = new NonTerm("L");
-    private static final NonTerm R = new NonTerm("R");
-    private static final NonTerm P = new NonTerm("P");
-    private static final NonTerm O = new NonTerm("O");
-
-    public static void main(String[] args) {
-        if (args.length == 0) {
-            System.err.println("Usage: [text]+");
-        } else {
-            for (String text : args) {
-                CharStream stream = new ANTLRInputStream(text);
-                Lexer lexer = new Sentence(stream);
-                try {
-                    System.out.printf("Parse tree: %n%s%n",
-                            new SentenceParser().parse(lexer));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
     }
 }
