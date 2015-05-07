@@ -6,9 +6,7 @@ import pp.block2.cc.Symbol;
 import pp.block2.cc.Term;
 import pp.block2.cc.ll.*;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -72,7 +70,24 @@ public class LLCalcTest {
 		Term eof = Symbol.EOF;
 		Term empty = Symbol.EMPTY;
 
+		LLCalc calc = createCalc(g);
 
+		//FIRST
+		Map<Symbol,Set<Term>> first = calc.getFirst();
+		assertEquals(set(assign,ifT),first.get(stat));
+		assertEquals(set(elseT, empty),first.get(elsePart));
+
+		//FOLLOW
+		assertEquals(set(eof,elseT), calc.getFollow().get(stat));
+		assertEquals(set(eof,elseT),calc.getFollow().get(elsePart));
+
+		//FIRSTP
+		assertEquals(set(assign), calc.getFirstp().get(g.getRules(stat).get(0)));
+		assertEquals(set(ifT),calc.getFirstp().get(g.getRules(stat).get(1)));
+		assertEquals(set(elseT), calc.getFirstp().get(g.getRules(elsePart).get(0)));
+		assertEquals(set(eof, elseT), calc.getFirstp().get(g.getRules(elsePart).get(1)));
+
+		assertFalse(calc.isLL1());
 	}
 
 	@Test
