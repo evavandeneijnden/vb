@@ -27,10 +27,10 @@ public class ABCParser implements Parser {
         } else {
             for (String text : args) {
                 CharStream stream = new ANTLRInputStream(text);
-                Lexer lexer = new Sentence(stream);
+                Lexer lexer = new ABC(stream);
                 try {
                     System.out.printf("Parse tree: %n%s%n",
-                            new SentenceParser().parse(lexer));
+                            new ABCParser().parse(lexer));
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -67,15 +67,45 @@ public class ABCParser implements Parser {
     }
 
     private AST parseR() throws ParseException {
+        AST result = new AST(R);
+        Token next = peek();
+        switch (next.getType()) {
+            case ABC.A:
+                result.addChild(parseToken(ABC.A));
+                result.addChild(parseToken(ABC.B));
+                result.addChild(parseToken(ABC.A));
+                result.addChild(parseP());
+                break;
 
-        return null;
+            case ABC.C:
+                result.addChild(parseToken(ABC.C));
+                result.addChild(parseToken(ABC.A));
+                result.addChild(parseToken(ABC.B));
+                result.addChild(parseToken(ABC.A));
+                result.addChild(parseP());
+                break;
+            default:
+                throw unparsable(R);
+        }
+        return result;
     }
 
     private AST parseO() throws ParseException {
-        AST result = new AST(L);
+        AST result = new AST(O);
         Token next = peek();
         if (next.getType() == ABC.B) {
             result.addChild(parseToken(ABC.B));
+        }
+        return result;
+    }
+
+    private AST parseP() throws ParseException {
+        AST result = new AST(P);
+        Token next = peek();
+        if (next.getType() == ABC.B) {
+            result.addChild(parseToken(ABC.B));
+            result.addChild(parseToken(ABC.C));
+            result.addChild(parseP());
         }
         return result;
     }
@@ -124,4 +154,5 @@ public class ABCParser implements Parser {
         }
         return new AST(fact.getTerminal(tokenType), next);
     }
+
 }
