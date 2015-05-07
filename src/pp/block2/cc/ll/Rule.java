@@ -3,11 +3,11 @@
  */
 package pp.block2.cc.ll;
 
-import pp.block2.cc.NonTerm;
-import pp.block2.cc.Symbol;
-
 import java.util.Arrays;
 import java.util.List;
+
+import pp.block2.cc.NonTerm;
+import pp.block2.cc.Symbol;
 
 /**
  * Rule in a grammar.
