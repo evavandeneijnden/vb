@@ -65,9 +65,9 @@ public class Grammars {
     public static Grammar makeABCshizzle() {
         // NT
         NonTerm l = new NonTerm("L");
-        NonTerm r = new NonTerm("L");
-        NonTerm p = new NonTerm("L");
-        NonTerm o = new NonTerm("L");
+        NonTerm r = new NonTerm("R");
+        NonTerm p = new NonTerm("P");
+        NonTerm o = new NonTerm("O");
 
         // T
         SymbolFactory term = new SymbolFactory(ABC.class);

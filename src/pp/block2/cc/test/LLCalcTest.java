@@ -90,9 +90,40 @@ public class LLCalcTest {
 		assertFalse(calc.isLL1());
 	}
 
+
 	@Test
 	public void testABC() {
 		Grammar g = Grammars.makeABCshizzle();
+
+		// T
+		Term a = g.getTerminal(ABC.A);
+		Term b = g.getTerminal(ABC.B);
+		Term c = g.getTerminal(ABC.C);
+		Term eof = Symbol.EOF;
+
+		// NT
+		NonTerm l = g.getNonterminal("L");
+		NonTerm r = g.getNonterminal("R");
+		NonTerm p = g.getNonterminal("P");
+		NonTerm o = g.getNonterminal("O");
+
+		LLCalc calc = createCalc(g);
+
+		//FIRST
+		assertEquals(set(a,c,b),calc.getFirst().get(l));
+		assertEquals(set(a, c),calc.getFirst().get(r));
+
+		//FOLLOW
+		assertEquals(set(eof), calc.getFollow().get(l));
+		assertEquals(set(a),calc.getFollow().get(r));
+
+		//FIRSTP
+		assertEquals(set(a, c), calc.getFirstp().get(g.getRules(l).get(0)));
+		assertEquals(set(b),calc.getFirstp().get(g.getRules(l).get(1)));
+		assertEquals(set(a), calc.getFirstp().get(g.getRules(r).get(0)));
+		assertEquals(set(c), calc.getFirstp().get(g.getRules(r).get(1)));
+
+		assertTrue(calc.isLL1());
 	}
 
 	/** Creates an LL1-calculator for a given grammar. */
