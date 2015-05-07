@@ -5,13 +5,11 @@ import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.Token;
 import pp.block2.cc.*;
+import pp.block2.cc.ll.ABC.*;
 
 import java.util.List;
 
 import static pp.block2.cc.ll.Sentence.*;
-
-//TODO: Parser does not seem to import the generated lexer from Antlr. You need access to R static variable
-//TODO: Parser rules seem off. First terminal is ?'R'? but this is not integrated in the grammar?
 
 public class ABCParser implements Parser {
     public ABCParser() {
@@ -19,13 +17,6 @@ public class ABCParser implements Parser {
     }
 
     private final SymbolFactory fact;
-    private List<? extends Token> tokens;
-    private int index;
-
-    private static final NonTerm Lp = new NonTerm("L");
-    private static final NonTerm Rp = new NonTerm("R");
-    private static final NonTerm Pp = new NonTerm("P");
-    private static final NonTerm Op = new NonTerm("O");
 
     @Override
     public AST parse(Lexer lexer) throws ParseException {
@@ -35,72 +26,36 @@ public class ABCParser implements Parser {
     }
 
     private AST parseL() throws ParseException {
-        AST result = new AST(Lp);
+        AST result = new AST(L);
         Token next = peek();
-        // choose between rules based on the lookahead
         switch (next.getType()) {
-            case 'R':
+            case ABC.A:
+            case ABC.C:
                 result.addChild(parseR());
-                result.addChild(parseToken('a'));
+                result.addChild(parseToken(ABC.A));
                 break;
-            case 'b':
-                result.addChild(parseToken('b'));
+
+            case ABC.B:
+                result.addChild(parseToken(ABC.B));
                 result.addChild(parseO());
-                result.addChild(parseToken('c'));
+                result.addChild(parseToken(ABC.C));
                 break;
             default:
-                System.out.println(next.getType());
-                throw unparsable(Lp);
+                throw unparsable(L);
         }
         return result;
     }
 
     private AST parseR() throws ParseException {
-        AST result = new AST(Rp);
-        Token next = peek();
-        switch(next.getType()) {
-            case 'a':
-                result.addChild(parseToken('a'));
-                result.addChild(parseToken('b'));
-                result.addChild(parseToken('a'));
-                result.addChild(parseP());
-                break;
-            case 'c':
-                result.addChild(parseToken('c'));
-                result.addChild(parseToken('a'));
-                result.addChild(parseToken('b'));
-                result.addChild(parseToken('a'));
-                result.addChild(parseP());
-                break;
-            default:
-                throw unparsable(Rp);
-        }
-        return result;
-    }
 
-    private AST parseP() throws ParseException {
-        AST result = new AST(Pp);
-        Token next = peek();
-        switch(next.getType()){
-            case 'b':
-                result.addChild(parseToken('b'));
-                result.addChild(parseToken('c'));
-                result.addChild(parseP());
-                break;
-        }
-        return result;
+        return null;
     }
 
     private AST parseO() throws ParseException {
-        AST result =  new AST(Op);
-        Token next = peek();
-        switch(next.getType()){
-            case 'b':
-                result.addChild(parseToken('b'));
-                break;
-        }
-        return result;
+
     }
+
+    private List<? extends Token> tokens;
 
     private ParseException unparsable(NonTerm nt) {
         try {
@@ -114,7 +69,28 @@ public class ABCParser implements Parser {
         }
     }
 
-    /** Creates an AST based on the expected token type. */
+    /**
+     * Returns the next token, without moving the token index.
+     */
+    private Token peek() throws ParseException {
+        if (index >= tokens.size()) {
+            throw new ParseException("Reading beyond end of input");
+        }
+        return tokens.get(index);
+    }
+
+    /**
+     * Returns the next token and moves up the token index.
+     */
+    private Token next() throws ParseException {
+        Token result = peek();
+        index++;
+        return result;
+    }
+
+    /**
+     * Creates an AST based on the expected token type.
+     */
     private AST parseToken(int tokenType) throws ParseException {
         Token next = next();
         if (next.getType() != tokenType) {
@@ -126,20 +102,12 @@ public class ABCParser implements Parser {
         return new AST(fact.getTerminal(tokenType), next);
     }
 
-    /** Returns the next token, without moving the token index. */
-    private Token peek() throws ParseException {
-        if (index >= tokens.size()) {
-            throw new ParseException("Reading beyond end of input");
-        }
-        return tokens.get(index);
-    }
+    private int index;
 
-    /** Returns the next token and moves up the token index. */
-    private Token next() throws ParseException {
-        Token result = peek();
-        index++;
-        return result;
-    }
+    private static final NonTerm L = new NonTerm("L");
+    private static final NonTerm R = new NonTerm("R");
+    private static final NonTerm P = new NonTerm("P");
+    private static final NonTerm O = new NonTerm("O");
 
     public static void main(String[] args) {
         if (args.length == 0) {
@@ -147,10 +115,10 @@ public class ABCParser implements Parser {
         } else {
             for (String text : args) {
                 CharStream stream = new ANTLRInputStream(text);
-                Lexer lexer = new ABC(stream);
+                Lexer lexer = new Sentence(stream);
                 try {
                     System.out.printf("Parse tree: %n%s%n",
-                            new ABCParser().parse(lexer));
+                            new SentenceParser().parse(lexer));
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
