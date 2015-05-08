@@ -109,13 +109,13 @@ public class SentenceParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(8);
+			setState(8); 
 			subject();
-			setState(9);
+			setState(9); 
 			match(VERB);
-			setState(10);
+			setState(10); 
 			object();
-			setState(11);
+			setState(11); 
 			match(ENDMARK);
 			}
 		}
@@ -161,16 +161,16 @@ public class SentenceParser extends Parser {
 			case ADJECTIVE:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(13);
+				setState(13); 
 				modifier();
-				setState(14);
+				setState(14); 
 				subject();
 				}
 				break;
 			case NOUN:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(16);
+				setState(16); 
 				match(NOUN);
 				}
 				break;
@@ -220,16 +220,16 @@ public class SentenceParser extends Parser {
 			case ADJECTIVE:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(19);
+				setState(19); 
 				modifier();
-				setState(20);
+				setState(20); 
 				object();
 				}
 				break;
 			case NOUN:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(22);
+				setState(22); 
 				match(NOUN);
 				}
 				break;
@@ -270,7 +270,7 @@ public class SentenceParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(25);
+			setState(25); 
 			match(ADJECTIVE);
 			}
 		}

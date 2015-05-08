@@ -7,9 +7,9 @@ import org.junit.Test;
 import pp.block2.cc.AST;
 import pp.block2.cc.ParseException;
 import pp.block2.cc.Parser;
-import pp.block2.cc.ll.Sentence;
-import pp.block2.cc.ll.SentenceConverter;
 import pp.block2.cc.ll.SentenceParser;
+import pp.block2.cc.ll.Sentence;
+import pp.block2.cc.antlr.SentenceConverter;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -22,7 +22,6 @@ public class SentenceConverterTest {
 	public void testSentence() {
 		lexerType = Sentence.class;
 		parser1 = new SentenceParser();
-		// The following will compile as soon as you do the exercise 
 		parser2 = new SentenceConverter();
 		compare("students love students.");
 		compare("all undergraduate students love all compilers.");
