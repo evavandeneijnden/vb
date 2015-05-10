@@ -1,4 +1,4 @@
-// Generated from /home/antoine/ownCloud/documents/[werk]/P-project/CF50/vb/src/pp/block2/cc/antlr/Sentence.g4 by ANTLR 4.5
+// Generated from C:/Users/Eva/Documents/vb/src/pp/block2/cc/antlr\Sentence.g4 by ANTLR 4.5
 package pp.block2.cc.antlr;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
@@ -19,15 +19,29 @@ public interface SentenceListener extends ParseTreeListener {
 	 */
 	void exitSentence(@NotNull SentenceParser.SentenceContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link SentenceParser#subject}.
+	 * Enter a parse tree produced by the {@code modSubject}
+	 * labeled alternative in {@link SentenceParser#subject}.
 	 * @param ctx the parse tree
 	 */
-	void enterSubject(@NotNull SentenceParser.SubjectContext ctx);
+	void enterModSubject(@NotNull SentenceParser.ModSubjectContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link SentenceParser#subject}.
+	 * Exit a parse tree produced by the {@code modSubject}
+	 * labeled alternative in {@link SentenceParser#subject}.
 	 * @param ctx the parse tree
 	 */
-	void exitSubject(@NotNull SentenceParser.SubjectContext ctx);
+	void exitModSubject(@NotNull SentenceParser.ModSubjectContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code simpleSubject}
+	 * labeled alternative in {@link SentenceParser#subject}.
+	 * @param ctx the parse tree
+	 */
+	void enterSimpleSubject(@NotNull SentenceParser.SimpleSubjectContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code simpleSubject}
+	 * labeled alternative in {@link SentenceParser#subject}.
+	 * @param ctx the parse tree
+	 */
+	void exitSimpleSubject(@NotNull SentenceParser.SimpleSubjectContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link SentenceParser#object}.
 	 * @param ctx the parse tree

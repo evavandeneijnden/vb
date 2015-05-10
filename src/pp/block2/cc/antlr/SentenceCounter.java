@@ -35,7 +35,7 @@ public class SentenceCounter extends SentenceBaseListener {
 		computeDepth(ctx);
 	}
 
-	@Override
+//	@Override
 	public void exitSubject(SubjectContext ctx) {
 		computeDepth(ctx);
 	}
