@@ -1,4 +1,4 @@
-// Generated from /home/antoine/ownCloud/documents/[werk]/P-project/CF50/vb/src/pp/block3/cc/antlr/Calc.g4 by ANTLR 4.5
+// Generated from C:/Users/Eva/Documents/vb/src/pp/block3/cc/antlr\Calc.g4 by ANTLR 4.5
 package pp.block3.cc.antlr;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -24,6 +24,18 @@ public class CalcBaseListener implements CalcListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitPar(@NotNull CalcParser.ParContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterMinus(@NotNull CalcParser.MinusContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMinus(@NotNull CalcParser.MinusContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
