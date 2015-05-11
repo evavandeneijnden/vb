@@ -1,4 +1,4 @@
-lexer grammar Sentence;
+grammar Sentence;
 
 @header{package pp.block2.cc.ll;}
 

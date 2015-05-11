@@ -1,4 +1,4 @@
-// Generated from C:/Users/Eva/Documents/vb/src/pp/block2/cc/antlr\Sentence.g4 by ANTLR 4.5
+// Generated from C:/Users/Eva/Documents/vb/src/pp/block2/cc/antlr\Calc.g4 by ANTLR 4.5
 package pp.block2.cc.antlr;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -7,71 +7,95 @@ import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 /**
- * This class provides an empty implementation of {@link SentenceListener},
+ * This class provides an empty implementation of {@link CalcListener},
  * which can be extended to create a listener which only needs to handle a subset
  * of the available methods.
  */
-public class SentenceBaseListener implements SentenceListener {
+public class CalcBaseListener implements CalcListener {
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSentence(@NotNull SentenceParser.SentenceContext ctx) { }
+	@Override public void enterExpr(@NotNull CalcParser.ExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSentence(@NotNull SentenceParser.SentenceContext ctx) { }
+	@Override public void exitExpr(@NotNull CalcParser.ExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterModSubject(@NotNull SentenceParser.ModSubjectContext ctx) { }
+	@Override public void enterAddition(@NotNull CalcParser.AdditionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitModSubject(@NotNull SentenceParser.ModSubjectContext ctx) { }
+	@Override public void exitAddition(@NotNull CalcParser.AdditionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSimpleSubject(@NotNull SentenceParser.SimpleSubjectContext ctx) { }
+	@Override public void enterMultiplication(@NotNull CalcParser.MultiplicationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSimpleSubject(@NotNull SentenceParser.SimpleSubjectContext ctx) { }
+	@Override public void exitMultiplication(@NotNull CalcParser.MultiplicationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterObject(@NotNull SentenceParser.ObjectContext ctx) { }
+	@Override public void enterNegation(@NotNull CalcParser.NegationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitObject(@NotNull SentenceParser.ObjectContext ctx) { }
+	@Override public void exitNegation(@NotNull CalcParser.NegationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterModifier(@NotNull SentenceParser.ModifierContext ctx) { }
+	@Override public void enterPower(@NotNull CalcParser.PowerContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitModifier(@NotNull SentenceParser.ModifierContext ctx) { }
+	@Override public void exitPower(@NotNull CalcParser.PowerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBase(@NotNull CalcParser.BaseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBase(@NotNull CalcParser.BaseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPo(@NotNull CalcParser.PoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPo(@NotNull CalcParser.PoContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

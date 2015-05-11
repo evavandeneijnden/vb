@@ -48,79 +48,79 @@ public class SentenceConverter //
         }
     }
 
-    @Override
-    public void enterSentence(@NotNull SentenceParser.SentenceContext ctx) {
-        result = new AST(SENTENCE);
-        currentPosition.push(result);
-    }
-
-
-    @Override
-    public void exitSentence(@NotNull SentenceParser.SentenceContext ctx) {
-        currentPosition.pop();
-    }
-
-
-    @Override
-    public void enterSubject(@NotNull SentenceParser.SubjectContext ctx) {
-        AST temp = new AST(SUBJECT);
-        currentPosition.peek().addChild(temp);
-        currentPosition.push(temp);
-    }
-
-
-    @Override
-    public void exitSubject(@NotNull SentenceParser.SubjectContext ctx) {
-        currentPosition.pop();
-    }
-
-
-    @Override
-    public void enterObject(@NotNull SentenceParser.ObjectContext ctx) {
-        AST temp = new AST(OBJECT);
-        currentPosition.peek().addChild(temp);
-        currentPosition.push(temp);
-    }
-
-
-    @Override
-    public void exitObject(@NotNull SentenceParser.ObjectContext ctx) {
-        currentPosition.pop();
-    }
-
-
-    @Override
-    public void enterModifier(@NotNull SentenceParser.ModifierContext ctx) {
-        AST temp = new AST(MODIFIER);
-        currentPosition.peek().addChild(temp);
-        currentPosition.push(temp);
-    }
-
-
-    @Override
-    public void exitModifier(@NotNull SentenceParser.ModifierContext ctx) {
-        currentPosition.pop();
-    }
-
-
-    @Override
-    public void enterEveryRule(@NotNull ParserRuleContext ctx) {
-    }
-
-
-    @Override
-    public void exitEveryRule(@NotNull ParserRuleContext ctx) {
-    }
-
-
-    @Override
-    public void visitTerminal(@NotNull TerminalNode node) {
-        currentPosition.peek().addChild(new AST(fact.getTerminal(node.getSymbol().getType()), node.getSymbol()));
-    }
-
-
-    @Override
-    public void visitErrorNode(@NotNull ErrorNode node) {
-        error = true;
-    }
+//    @Override
+//    public void enterSentence(@NotNull SentenceParser.SentenceContext ctx) {
+//        result = new AST(SENTENCE);
+//        currentPosition.push(result);
+//    }
+//
+//
+//    @Override
+//    public void exitSentence(@NotNull SentenceParser.SentenceContext ctx) {
+//        currentPosition.pop();
+//    }
+//
+//
+//    @Override
+//    public void enterSubject(@NotNull SentenceParser.SubjectContext ctx) {
+//        AST temp = new AST(SUBJECT);
+//        currentPosition.peek().addChild(temp);
+//        currentPosition.push(temp);
+//    }
+//
+//
+//    @Override
+//    public void exitSubject(@NotNull SentenceParser.SubjectContext ctx) {
+//        currentPosition.pop();
+//    }
+//
+//
+//    @Override
+//    public void enterObject(@NotNull SentenceParser.ObjectContext ctx) {
+//        AST temp = new AST(OBJECT);
+//        currentPosition.peek().addChild(temp);
+//        currentPosition.push(temp);
+//    }
+//
+//
+//    @Override
+//    public void exitObject(@NotNull SentenceParser.ObjectContext ctx) {
+//        currentPosition.pop();
+//    }
+//
+//
+//    @Override
+//    public void enterModifier(@NotNull SentenceParser.ModifierContext ctx) {
+//        AST temp = new AST(MODIFIER);
+//        currentPosition.peek().addChild(temp);
+//        currentPosition.push(temp);
+//    }
+//
+//
+//    @Override
+//    public void exitModifier(@NotNull SentenceParser.ModifierContext ctx) {
+//        currentPosition.pop();
+//    }
+//
+//
+//    @Override
+//    public void enterEveryRule(@NotNull ParserRuleContext ctx) {
+//    }
+//
+//
+//    @Override
+//    public void exitEveryRule(@NotNull ParserRuleContext ctx) {
+//    }
+//
+//
+//    @Override
+//    public void visitTerminal(@NotNull TerminalNode node) {
+//        currentPosition.peek().addChild(new AST(fact.getTerminal(node.getSymbol().getType()), node.getSymbol()));
+//    }
+//
+//
+//    @Override
+//    public void visitErrorNode(@NotNull ErrorNode node) {
+//        error = true;
+//    }
 }
