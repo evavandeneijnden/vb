@@ -1,22 +1,13 @@
 package pp.block3.cc.test;
 
-import static org.junit.Assert.assertEquals;
-
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.Lexer;
-import org.antlr.v4.runtime.TokenStream;
+import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.junit.Test;
-
-import pp.block3.cc.antlr.CalcAttrLexer;
-import pp.block3.cc.antlr.CalcAttrParser;
+import pp.block3.cc.antlr.*;
 import pp.block3.cc.antlr.CalcAttrParser.ExprContext;
-import pp.block3.cc.antlr.CalcLexer;
-import pp.block3.cc.antlr.CalcParser;
-import pp.block3.cc.antlr.Calculator;
+
+import static org.junit.Assert.assertEquals;
 
 public class CalcTest {
 
@@ -25,6 +16,8 @@ public class CalcTest {
 		test(5, "3+2");
 		test(7, "1+2*3");
 		test(9, "(1+2)*3");
+		test(-1, "1+-2");
+		test(0, "-8+9");
 	}
 
 	private void test(int expected, String expr) {
