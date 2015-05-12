@@ -1,4 +1,4 @@
-// Generated from C:/Users/Eva/Documents/vb/src/pp/block3/cc/antlr\Calc.g4 by ANTLR 4.5
+// Generated from /home/antoine/ownCloud/documents/[werk]/P-project/CF50/vb/src/pp/block3/cc/antlr/Calc.g4 by ANTLR 4.5
 package pp.block3.cc.antlr;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;

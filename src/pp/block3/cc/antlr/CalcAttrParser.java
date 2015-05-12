@@ -90,14 +90,15 @@ public class CalcAttrParser extends Parser {
 		public ExprContext e;
 		public Token NUMBER;
 		public ExprContext e1;
-		public TerminalNode LPAR() { return getToken(CalcAttrParser.LPAR, 0); }
-		public TerminalNode RPAR() { return getToken(CalcAttrParser.RPAR, 0); }
+		public TerminalNode MINUS() { return getToken(CalcAttrParser.MINUS, 0); }
 		public List<ExprContext> expr() {
 			return getRuleContexts(ExprContext.class);
 		}
 		public ExprContext expr(int i) {
 			return getRuleContext(ExprContext.class,i);
 		}
+		public TerminalNode LPAR() { return getToken(CalcAttrParser.LPAR, 0); }
+		public TerminalNode RPAR() { return getToken(CalcAttrParser.RPAR, 0); }
 		public TerminalNode NUMBER() { return getToken(CalcAttrParser.NUMBER, 0); }
 		public TerminalNode TIMES() { return getToken(CalcAttrParser.TIMES, 0); }
 		public TerminalNode PLUS() { return getToken(CalcAttrParser.PLUS, 0); }
@@ -130,15 +131,24 @@ public class CalcAttrParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(11);
+			setState(15);
 			switch (_input.LA(1)) {
-			case LPAR:
+			case MINUS:
 				{
 				setState(3); 
-				match(LPAR);
+				match(MINUS);
 				setState(4); 
+				((ExprContext)_localctx).e = expr(5);
+				 ((ExprContext)_localctx).val =  - ((ExprContext)_localctx).e.val; 
+				}
+				break;
+			case LPAR:
+				{
+				setState(7); 
+				match(LPAR);
+				setState(8); 
 				((ExprContext)_localctx).e = expr(0);
-				setState(5); 
+				setState(9); 
 				match(RPAR);
 				 ((ExprContext)_localctx).val =  ((ExprContext)_localctx).e.val; 
 				}
@@ -146,7 +156,7 @@ public class CalcAttrParser extends Parser {
 			case NUMBER:
 				{
 				 System.out.println("Evaluating NUMBER"); 
-				setState(9); 
+				setState(13); 
 				((ExprContext)_localctx).NUMBER = match(NUMBER);
 				 ((ExprContext)_localctx).val =  getValue((((ExprContext)_localctx).NUMBER!=null?((ExprContext)_localctx).NUMBER.getText():null)); 
 				}
@@ -155,7 +165,7 @@ public class CalcAttrParser extends Parser {
 				throw new NoViableAltException(this);
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(25);
+			setState(29);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
@@ -163,7 +173,7 @@ public class CalcAttrParser extends Parser {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(23);
+					setState(27);
 					switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
 					case 1:
 						{
@@ -171,11 +181,11 @@ public class CalcAttrParser extends Parser {
 						_localctx.e0 = _prevctx;
 						_localctx.e0 = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(13);
+						setState(17);
 						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
-						setState(14); 
+						setState(18); 
 						match(TIMES);
-						setState(15); 
+						setState(19); 
 						((ExprContext)_localctx).e1 = expr(5);
 						 ((ExprContext)_localctx).val =  ((ExprContext)_localctx).e0.val * ((ExprContext)_localctx).e1.val; 
 						}
@@ -186,11 +196,11 @@ public class CalcAttrParser extends Parser {
 						_localctx.e0 = _prevctx;
 						_localctx.e0 = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(18);
+						setState(22);
 						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
-						setState(19); 
+						setState(23); 
 						match(PLUS);
-						setState(20); 
+						setState(24); 
 						((ExprContext)_localctx).e1 = expr(4);
 						 ((ExprContext)_localctx).val =  ((ExprContext)_localctx).e0.val + ((ExprContext)_localctx).e1.val; 
 						}
@@ -198,7 +208,7 @@ public class CalcAttrParser extends Parser {
 					}
 					} 
 				}
-				setState(27);
+				setState(31);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
 			}
@@ -233,15 +243,16 @@ public class CalcAttrParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\t\37\4\2\t\2\3\2"+
-		"\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\5\2\16\n\2\3\2\3\2\3\2\3\2\3\2\3\2\3"+
-		"\2\3\2\3\2\3\2\7\2\32\n\2\f\2\16\2\35\13\2\3\2\2\3\2\3\2\2\2 \2\r\3\2"+
-		"\2\2\4\5\b\2\1\2\5\6\7\6\2\2\6\7\5\2\2\2\7\b\7\7\2\2\b\t\b\2\1\2\t\16"+
-		"\3\2\2\2\n\13\b\2\1\2\13\f\7\b\2\2\f\16\b\2\1\2\r\4\3\2\2\2\r\n\3\2\2"+
-		"\2\16\33\3\2\2\2\17\20\f\6\2\2\20\21\7\3\2\2\21\22\5\2\2\7\22\23\b\2\1"+
-		"\2\23\32\3\2\2\2\24\25\f\5\2\2\25\26\7\4\2\2\26\27\5\2\2\6\27\30\b\2\1"+
-		"\2\30\32\3\2\2\2\31\17\3\2\2\2\31\24\3\2\2\2\32\35\3\2\2\2\33\31\3\2\2"+
-		"\2\33\34\3\2\2\2\34\3\3\2\2\2\35\33\3\2\2\2\5\r\31\33";
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\t#\4\2\t\2\3\2\3"+
+		"\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\5\2\22\n\2\3\2\3\2\3\2"+
+		"\3\2\3\2\3\2\3\2\3\2\3\2\3\2\7\2\36\n\2\f\2\16\2!\13\2\3\2\2\3\2\3\2\2"+
+		"\2%\2\21\3\2\2\2\4\5\b\2\1\2\5\6\7\5\2\2\6\7\5\2\2\7\7\b\b\2\1\2\b\22"+
+		"\3\2\2\2\t\n\7\6\2\2\n\13\5\2\2\2\13\f\7\7\2\2\f\r\b\2\1\2\r\22\3\2\2"+
+		"\2\16\17\b\2\1\2\17\20\7\b\2\2\20\22\b\2\1\2\21\4\3\2\2\2\21\t\3\2\2\2"+
+		"\21\16\3\2\2\2\22\37\3\2\2\2\23\24\f\6\2\2\24\25\7\3\2\2\25\26\5\2\2\7"+
+		"\26\27\b\2\1\2\27\36\3\2\2\2\30\31\f\5\2\2\31\32\7\4\2\2\32\33\5\2\2\6"+
+		"\33\34\b\2\1\2\34\36\3\2\2\2\35\23\3\2\2\2\35\30\3\2\2\2\36!\3\2\2\2\37"+
+		"\35\3\2\2\2\37 \3\2\2\2 \3\3\2\2\2!\37\3\2\2\2\5\21\35\37";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
