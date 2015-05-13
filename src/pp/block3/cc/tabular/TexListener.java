@@ -1,5 +1,5 @@
 // Generated from /home/antoine/ownCloud/documents/[werk]/P-project/CF50/vb/src/pp/block3/cc/tabular/Tex.g4 by ANTLR 4.5
-package pp.block3.cc.symbol;
+package pp.block3.cc.tabular;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -28,16 +28,6 @@ public interface TexListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitBeginTable(@NotNull TexParser.BeginTableContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TexParser#argument}.
-	 * @param ctx the parse tree
-	 */
-	void enterArgument(@NotNull TexParser.ArgumentContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TexParser#argument}.
-	 * @param ctx the parse tree
-	 */
-	void exitArgument(@NotNull TexParser.ArgumentContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link TexParser#row}.
 	 * @param ctx the parse tree

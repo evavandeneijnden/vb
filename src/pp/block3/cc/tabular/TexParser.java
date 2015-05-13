@@ -1,5 +1,5 @@
 // Generated from /home/antoine/ownCloud/documents/[werk]/P-project/CF50/vb/src/pp/block3/cc/tabular/Tex.g4 by ANTLR 4.5
-package pp.block3.cc.symbol;
+package pp.block3.cc.tabular;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -17,22 +17,19 @@ public class TexParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, LEFT=6, CENTERED=7, RIGHT=8, ENTRY=9, 
-		COMMENT=10, WS=11;
+		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, ARGUMENT=6, ENTRY=7, COMMENT=8, 
+		WS=9;
 	public static final int
-		RULE_table = 0, RULE_beginTable = 1, RULE_argument = 2, RULE_row = 3, 
-		RULE_endTable = 4;
+		RULE_table = 0, RULE_beginTable = 1, RULE_row = 2, RULE_endTable = 3;
 	public static final String[] ruleNames = {
-		"table", "beginTable", "argument", "row", "endTable"
+		"table", "beginTable", "row", "endTable"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
-		null, "'\\begin{tabular}{'", "'}'", "'&'", "'\\\\'", "'\\end{tabular}'", 
-		"'l'", "'c'", "'r'"
+		null, "'\\begin{tabular}{'", "'}'", "'&'", "'\\\\'", "'\\end{tabular}'"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
-		null, null, null, null, null, null, "LEFT", "CENTERED", "RIGHT", "ENTRY", 
-		"COMMENT", "WS"
+		null, null, null, null, null, null, "ARGUMENT", "ENTRY", "COMMENT", "WS"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -117,23 +114,23 @@ public class TexParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(10); 
+			setState(8); 
 			beginTable();
-			setState(12); 
+			setState(10); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(11); 
+				setState(9); 
 				row();
 				}
 				}
-				setState(14); 
+				setState(12); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			} while ( _la==ENTRY );
-			setState(16); 
+			setState(14); 
 			endTable();
 			}
 		}
@@ -149,9 +146,7 @@ public class TexParser extends Parser {
 	}
 
 	public static class BeginTableContext extends ParserRuleContext {
-		public ArgumentContext argument() {
-			return getRuleContext(ArgumentContext.class,0);
-		}
+		public TerminalNode ARGUMENT() { return getToken(TexParser.ARGUMENT, 0); }
 		public TerminalNode WS() { return getToken(TexParser.WS, 0); }
 		public BeginTableContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -173,79 +168,14 @@ public class TexParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(18); 
+			setState(16); 
 			match(T__0);
-			setState(19); 
-			argument();
-			setState(20); 
+			setState(17); 
+			match(ARGUMENT);
+			setState(18); 
 			match(T__1);
-			setState(21); 
+			setState(19); 
 			match(WS);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class ArgumentContext extends ParserRuleContext {
-		public List<TerminalNode> LEFT() { return getTokens(TexParser.LEFT); }
-		public TerminalNode LEFT(int i) {
-			return getToken(TexParser.LEFT, i);
-		}
-		public List<TerminalNode> CENTERED() { return getTokens(TexParser.CENTERED); }
-		public TerminalNode CENTERED(int i) {
-			return getToken(TexParser.CENTERED, i);
-		}
-		public List<TerminalNode> RIGHT() { return getTokens(TexParser.RIGHT); }
-		public TerminalNode RIGHT(int i) {
-			return getToken(TexParser.RIGHT, i);
-		}
-		public ArgumentContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_argument; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof TexListener ) ((TexListener)listener).enterArgument(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof TexListener ) ((TexListener)listener).exitArgument(this);
-		}
-	}
-
-	public final ArgumentContext argument() throws RecognitionException {
-		ArgumentContext _localctx = new ArgumentContext(_ctx, getState());
-		enterRule(_localctx, 4, RULE_argument);
-		int _la;
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(24); 
-			_errHandler.sync(this);
-			_la = _input.LA(1);
-			do {
-				{
-				{
-				setState(23);
-				_la = _input.LA(1);
-				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << LEFT) | (1L << CENTERED) | (1L << RIGHT))) != 0)) ) {
-				_errHandler.recoverInline(this);
-				}
-				consume();
-				}
-				}
-				setState(26); 
-				_errHandler.sync(this);
-				_la = _input.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << LEFT) | (1L << CENTERED) | (1L << RIGHT))) != 0) );
 			}
 		}
 		catch (RecognitionException re) {
@@ -284,38 +214,59 @@ public class TexParser extends Parser {
 
 	public final RowContext row() throws RecognitionException {
 		RowContext _localctx = new RowContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_row);
+		enterRule(_localctx, 4, RULE_row);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(28); 
+			setState(21); 
 			match(ENTRY);
-			setState(29); 
-			match(WS);
-			setState(36);
+			setState(23);
+			_la = _input.LA(1);
+			if (_la==WS) {
+				{
+				setState(22); 
+				match(WS);
+				}
+			}
+
+			setState(35);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==T__2) {
 				{
 				{
-				setState(30); 
+				setState(25); 
 				match(T__2);
-				setState(31); 
-				match(WS);
-				setState(32); 
+				setState(27);
+				_la = _input.LA(1);
+				if (_la==WS) {
+					{
+					setState(26); 
+					match(WS);
+					}
+				}
+
+				setState(29); 
 				match(ENTRY);
-				setState(33); 
-				match(WS);
+				setState(31);
+				_la = _input.LA(1);
+				if (_la==WS) {
+					{
+					setState(30); 
+					match(WS);
+					}
+				}
+
 				}
 				}
-				setState(38);
+				setState(37);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(39); 
+			setState(38); 
 			match(T__3);
-			setState(40); 
+			setState(39); 
 			match(WS);
 			}
 		}
@@ -348,13 +299,13 @@ public class TexParser extends Parser {
 
 	public final EndTableContext endTable() throws RecognitionException {
 		EndTableContext _localctx = new EndTableContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_endTable);
+		enterRule(_localctx, 6, RULE_endTable);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(42); 
+			setState(41); 
 			match(T__4);
-			setState(43); 
+			setState(42); 
 			match(WS);
 			}
 		}
@@ -370,18 +321,19 @@ public class TexParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\r\60\4\2\t\2\4\3"+
-		"\t\3\4\4\t\4\4\5\t\5\4\6\t\6\3\2\3\2\6\2\17\n\2\r\2\16\2\20\3\2\3\2\3"+
-		"\3\3\3\3\3\3\3\3\3\3\4\6\4\33\n\4\r\4\16\4\34\3\5\3\5\3\5\3\5\3\5\3\5"+
-		"\7\5%\n\5\f\5\16\5(\13\5\3\5\3\5\3\5\3\6\3\6\3\6\3\6\2\2\7\2\4\6\b\n\2"+
-		"\3\3\2\b\n-\2\f\3\2\2\2\4\24\3\2\2\2\6\32\3\2\2\2\b\36\3\2\2\2\n,\3\2"+
-		"\2\2\f\16\5\4\3\2\r\17\5\b\5\2\16\r\3\2\2\2\17\20\3\2\2\2\20\16\3\2\2"+
-		"\2\20\21\3\2\2\2\21\22\3\2\2\2\22\23\5\n\6\2\23\3\3\2\2\2\24\25\7\3\2"+
-		"\2\25\26\5\6\4\2\26\27\7\4\2\2\27\30\7\r\2\2\30\5\3\2\2\2\31\33\t\2\2"+
-		"\2\32\31\3\2\2\2\33\34\3\2\2\2\34\32\3\2\2\2\34\35\3\2\2\2\35\7\3\2\2"+
-		"\2\36\37\7\13\2\2\37&\7\r\2\2 !\7\5\2\2!\"\7\r\2\2\"#\7\13\2\2#%\7\r\2"+
-		"\2$ \3\2\2\2%(\3\2\2\2&$\3\2\2\2&\'\3\2\2\2\')\3\2\2\2(&\3\2\2\2)*\7\6"+
-		"\2\2*+\7\r\2\2+\t\3\2\2\2,-\7\7\2\2-.\7\r\2\2.\13\3\2\2\2\5\20\34&";
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\13/\4\2\t\2\4\3\t"+
+		"\3\4\4\t\4\4\5\t\5\3\2\3\2\6\2\r\n\2\r\2\16\2\16\3\2\3\2\3\3\3\3\3\3\3"+
+		"\3\3\3\3\4\3\4\5\4\32\n\4\3\4\3\4\5\4\36\n\4\3\4\3\4\5\4\"\n\4\7\4$\n"+
+		"\4\f\4\16\4\'\13\4\3\4\3\4\3\4\3\5\3\5\3\5\3\5\2\2\6\2\4\6\b\2\2/\2\n"+
+		"\3\2\2\2\4\22\3\2\2\2\6\27\3\2\2\2\b+\3\2\2\2\n\f\5\4\3\2\13\r\5\6\4\2"+
+		"\f\13\3\2\2\2\r\16\3\2\2\2\16\f\3\2\2\2\16\17\3\2\2\2\17\20\3\2\2\2\20"+
+		"\21\5\b\5\2\21\3\3\2\2\2\22\23\7\3\2\2\23\24\7\b\2\2\24\25\7\4\2\2\25"+
+		"\26\7\13\2\2\26\5\3\2\2\2\27\31\7\t\2\2\30\32\7\13\2\2\31\30\3\2\2\2\31"+
+		"\32\3\2\2\2\32%\3\2\2\2\33\35\7\5\2\2\34\36\7\13\2\2\35\34\3\2\2\2\35"+
+		"\36\3\2\2\2\36\37\3\2\2\2\37!\7\t\2\2 \"\7\13\2\2! \3\2\2\2!\"\3\2\2\2"+
+		"\"$\3\2\2\2#\33\3\2\2\2$\'\3\2\2\2%#\3\2\2\2%&\3\2\2\2&(\3\2\2\2\'%\3"+
+		"\2\2\2()\7\6\2\2)*\7\13\2\2*\7\3\2\2\2+,\7\7\2\2,-\7\13\2\2-\t\3\2\2\2"+
+		"\7\16\31\35!%";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

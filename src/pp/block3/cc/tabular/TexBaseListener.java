@@ -1,5 +1,5 @@
 // Generated from /home/antoine/ownCloud/documents/[werk]/P-project/CF50/vb/src/pp/block3/cc/tabular/Tex.g4 by ANTLR 4.5
-package pp.block3.cc.symbol;
+package pp.block3.cc.tabular;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.misc.NotNull;
@@ -36,18 +36,6 @@ public class TexBaseListener implements TexListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitBeginTable(@NotNull TexParser.BeginTableContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterArgument(@NotNull TexParser.ArgumentContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitArgument(@NotNull TexParser.ArgumentContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
