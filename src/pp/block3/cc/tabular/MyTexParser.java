@@ -26,7 +26,7 @@ public class MyTexParser extends TexBaseListener {
      */
     @Override
     public void enterTable(@NotNull TexParser.TableContext ctx) {
-        write("<!DOCTYPE html>\n<html>\n\t<body>\n");
+        write("<!DOCTYPE html>\n<html>\n\t<body style=\"font-family: mono;\">\n");
     }
 
     /**
