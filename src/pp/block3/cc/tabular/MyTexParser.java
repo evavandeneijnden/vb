@@ -65,7 +65,7 @@ public class MyTexParser extends TexBaseListener {
      */
     @Override
     public void enterRow(@NotNull TexParser.RowContext ctx) {
-        write("\t\t\t<tr>\n");
+        write("\t\t\t<tr>\n\t\t\t\t<td>");
     }
 
     /**
@@ -75,7 +75,7 @@ public class MyTexParser extends TexBaseListener {
      */
     @Override
     public void exitRow(@NotNull TexParser.RowContext ctx) {
-        write("\t\t\t</tr>\n");
+        write("</td>\n\t\t\t</tr>\n");
     }
 
     /**
@@ -122,8 +122,13 @@ public class MyTexParser extends TexBaseListener {
      */
     @Override
     public void visitTerminal(@NotNull TerminalNode node) {
-        if (node.getSymbol().getType()==TexLexer.ENTRY) {
-            write(String.format("\t\t\t\t<td>%s</td>\n",node.toString()));
+        switch (node.getSymbol().getType()) {
+            case TexLexer.AND:
+                write("</td>\n\t\t\t\t<td>");
+                break;
+            case TexLexer.ENTRY:
+                write(node.toString());
+                break;
         }
     }
 
