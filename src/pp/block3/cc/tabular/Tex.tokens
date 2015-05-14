@@ -1,0 +1,14 @@
+T__0=1
+T__1=2
+T__2=3
+T__3=4
+T__4=5
+ARGUMENT=6
+ENTRY=7
+COMMENT=8
+WS=9
+'\\begin{tabular}{'=1
+'}'=2
+'&'=3
+'\\\\'=4
+'\\end{tabular}'=5
