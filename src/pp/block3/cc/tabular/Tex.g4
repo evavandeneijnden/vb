@@ -2,15 +2,22 @@ grammar Tex;
 
 @header{package pp.block3.cc.tabular;}
 
-table : beginTable row+ endTable;
+table   : WS? beginTable row+ endTable;
 
-beginTable : '\\begin{tabular}{' ARGUMENT '}' WS;
+beginTable : BS BEGIN LB TABULAR RB LB ARGUMENT RB WS;
 ARGUMENT : [lcr] + ;
 
-row : ENTRY WS? ('&' WS? ENTRY WS?)* '\\\\' WS;
-ENTRY : [a-zA-Z0-9]* ;
+row     : ( WS? (ENTRY WS?)? AND)* WS? (ENTRY WS?)? BS BS WS;
 
-endTable : '\\end{tabular}' WS;
+endTable : BS END LB TABULAR RB WS?;
 
 COMMENT : '%' .*? [\n\r]+ -> skip;
-WS : [ \t\n\r]+ ;
+WS      : [ \t\n\r]+ ;
+BS      : [\\];
+LB      : [{];
+RB      : [}];
+AND     : [&];
+TABULAR : 'tabular';
+BEGIN   : 'begin';
+END     : 'end';
+ENTRY   : [a-zA-Z0-9]([a-zA-Z0-9 ]*[a-zA-Z0-9])? ;

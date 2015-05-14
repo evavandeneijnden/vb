@@ -23,7 +23,6 @@ public class HTMLGenerator extends TexBaseListener {
             for (String filename : args) {
                 System.out.println("Parsing " + filename);
                 try {
-                    System.out.println(Paths.get(filename).getFileName());
                     MyListener myListener = new MyListener();
 
                     ANTLRFileStream chars = new ANTLRFileStream(filename);
@@ -43,9 +42,11 @@ public class HTMLGenerator extends TexBaseListener {
                         for (String error : myListener.getErrors()) {
                             System.err.println(error);
                         }
+                        System.err.println(String.format("The file '%s' was not converted!",filename));
                     } else {
                         TexBaseListener scopeParser = new MyTexParser(new FileWriter(Paths.get(filename).getFileName().toString() + ".html"));
                         new ParseTreeWalker().walk(scopeParser, parseTree);
+                        System.out.println(String.format("The file '%s' is converted.",filename));
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
