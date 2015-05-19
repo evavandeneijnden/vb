@@ -2,14 +2,14 @@ grammar Tex;
 
 @header{package pp.block3.cc.tabular;}
 
-table   : WS? beginTable row+ endTable;
+table   : WS? beginTable row+ endTable WS?;
 
 beginTable : BS BEGIN LB TABULAR RB LB ARGUMENT RB WS;
 ARGUMENT : [lcr] + ;
 
 row     : ( WS? (ENTRY WS?)? AND)* WS? (ENTRY WS?)? BS BS WS;
 
-endTable : BS END LB TABULAR RB WS?;
+endTable : BS END LB TABULAR RB;
 
 COMMENT : '%' .*? [\n\r]+ -> skip;
 WS      : [ \t\n\r]+ ;
