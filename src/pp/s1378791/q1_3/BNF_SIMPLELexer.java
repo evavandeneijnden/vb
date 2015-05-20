@@ -9,7 +9,7 @@ import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.misc.NotNull;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
-public class BNFLexer extends Lexer {
+public class BNF_SIMPLELexer extends Lexer {
 	static { RuntimeMetaData.checkVersion("4.5", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
@@ -65,7 +65,7 @@ public class BNFLexer extends Lexer {
 	}
 
 
-	public BNFLexer(CharStream input) {
+	public BNF_SIMPLELexer(CharStream input) {
 		super(input);
 		_interp = new LexerATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}

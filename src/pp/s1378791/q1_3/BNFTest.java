@@ -5,6 +5,9 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+
 
 /**
  * Created by antoine on 20/05/15.
@@ -18,7 +21,10 @@ public class BNFTest {
                 parseStringToTree("((Type)x).i-10+y"));
     }
 
-
+    @Test
+    public void testLL1() {
+        assertTrue((new MyLLCalc(Grammars.makeBNFSimple())).isLL1());
+    }
 
     public String parseStringToTree(String text) {
         CharStream stream = new ANTLRInputStream(text);
