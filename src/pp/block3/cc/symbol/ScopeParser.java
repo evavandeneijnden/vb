@@ -10,9 +10,6 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Created by antoine on 13/05/15.
- */
 public class ScopeParser extends DeclUseBaseListener {
     SymbolTable scope;
     List<String> errors;

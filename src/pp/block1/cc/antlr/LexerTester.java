@@ -1,16 +1,16 @@
 package pp.block1.cc.antlr;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.List;
-
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.Token;
 import org.junit.Assert;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 public class LexerTester {
 	public LexerTester(Class<? extends Lexer> lexerType) {
@@ -60,7 +60,7 @@ public class LexerTester {
 	/** Tests whether a given text is rejected by the lexer. */
 	public void wrong(String text) {
 		try {
-			scan(text);
+            System.out.println(scan(text));
 			Assert.fail(String.format(
 					"'%s' should have been rejected but wasn't", text));
 		} catch (LexerException e) {

@@ -1,5 +1,5 @@
 // Generated from /home/antoine/ownCloud/documents/[werk]/P-project/CF50/vb/src/pp/s1378791/q1_5/TypeUse.g4 by ANTLR 4.5
-package pp.homework.q1_5;
+package pp.s1378791.q1_5;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.misc.NotNull;

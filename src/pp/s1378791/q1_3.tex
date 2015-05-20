@@ -1,0 +1,49 @@
+\subsection{}
+a{[}i+1{]} + b.field \\
+E \\
+E + F \\
+F + F \\
+G + F \\
+G {[} E {]} + F \\
+A {[} E {]} + F \\
+ID {[} E + F {]} + F \\
+ID {[} F + F {]} + F \\
+ID {[} G + F {]} + F \\
+ID {[} A + F {]} + F \\
+ID {[} ID + F {]} + F \\
+ID {[} ID + G {]} + F \\
+ID {[} ID + A {]} + F \\
+ID {[} ID + NUM {]} + F \\
+ID {[} ID + NUM {]} + G \\
+ID {[} ID + NUM {]} + G . ID \\
+ID {[} ID + NUM {]} + A . ID \\
+ID {[} ID + NUM {]} + ID . ID
+
+\begin{verbatim}
+              E
+             /|\
+            E + F
+           /    |
+          F     G
+         /     /|\
+        G     G . ID
+       /|     |
+      / |     A
+     / /|\    |
+    G [ E ]   ID
+   /   /|\
+  A   E + F
+ /    |   |
+ID    F   G
+      |   |
+      G   A
+      |   |
+      A   ID
+      |
+      ID
+\end{verbatim}
+
+((Type) x).i - 10 + y \\
+E \\
+
+

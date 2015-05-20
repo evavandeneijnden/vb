@@ -9,6 +9,7 @@ public class CalcCompilerTest {
 	private final CalcCompiler compiler = new CalcCompiler();
 	@Test
 	public void test() {
+        System.out.println(0b0000000);
 //		test(-11, "1+-3*4");
 //		test(-8, "(1+-3)*4");
 //		test(11, "--1+2*3+4");
