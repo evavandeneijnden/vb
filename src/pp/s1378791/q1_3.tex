@@ -147,8 +147,8 @@ $E' \rightarrow $"+"$ F E'    $ & +             & eof, ], )              & + \\
 $E' \rightarrow $"-"$ F E'    $ & -             & eof, ], )              & - \\
 $E' \rightarrow epsilon       $ & epsilon       & eof, ], )              & eof, ], ) \\
 $F  \rightarrow "(" ID ")" F  $ & (             & eof, ], ), +, -        & ( \\
-$F  \rightarrow G             $ & num, id       & eof, ], ), +, -        & (, num, id \\
-$G  \rightarrow A G'          $ & num, id       & eof, ], ), +, -        & (, num, id \\
+$F  \rightarrow G             $ & (, num, id    & eof, ], ), +, -        & (, num, id \\
+$G  \rightarrow A G'          $ & (, num, id    & eof, ], ), +, -        & (, num, id \\
 $G' \rightarrow "[" E "] G'   $ & [             & eof, ], ), +, -        & [ \\
 $G' \rightarrow "." ID G'     $ & .             & eof, ], ), +, -        & . \\
 $G' \rightarrow epsilon       $ & epsilon       & eof, ], ), +, -        & eof, +, -, ], ) \\
@@ -156,3 +156,8 @@ $A  \rightarrow "(" E ")"     $ & (             & eof, ], ), +, -, [, .  & ( \\
 $A  \rightarrow NUM           $ & num           & eof, ], ), +, -, [, .  & num \\
 $A  \rightarrow ID            $ & id            & eof, ], ), +, -, [, .  &  id \\
 \end{tabular}
+
+\subsection{}
+For example the F rules (rules with F in the lhs.) can both be chosen if a '(' is encountered.
+
+\subsection{}
