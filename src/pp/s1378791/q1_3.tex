@@ -118,41 +118,41 @@ G' -> "[" E "] G'
 \begin{tabular}{lllll}
 & 1 & 2 & 3 & 4 \\
 \hline
-E & Ø & ( &  (, num, id, &  , num, id \\
+E & Ø & ( & ( & (, num, id \\
 E'& +, -, epsilon & +, -, epsilon & +, -, epsilon & +, -, epsilon \\
-F & ( & ( &  (, num, id &  (, num, id \\
-G & Ø &  (, num, id &  (, num, id &  (, num, id \\
+F & ( & ( & (, num, id & (, num, id \\
+G & Ø & (, num, id & (, num, id &  (, num, id \\
 G'& [, ., epsilon & [, ., epsilon & [, ., epsilon & [, ., epsilon \\
-A &  (, num, id &  (, num, id &  (, num, id &  (, num, id \\
+A & (, num, id & (, num, id & (, num, id & (, num, id \\
 \end{tabular}
 
 \subsubsection{FOLLOW}
 \begin{tabular}{llll}
 - & init & 1 & 2 \\
 \hline
-E &  eof & eof ], ) & eof, ], ) \\
-E'&  Ø & eof ], ) & eof, ], ) \\
-F &  Ø & eof ], ), +, - &  eof, ], ), +, - \\
-G &  Ø & eof ], ), +, - &  eof, ], ), +, - \\
-G'&  Ø & eof ], ), +, - &  eof, ], ), +, - \\
-A &  Ø & eof ], ), +, -, [, .  &  eof, ], ), +, -, [, . \\
+E & eof & eof ], ) & eof, ], ) \\
+E'& Ø & eof ], ) & eof, ], ) \\
+F & Ø & eof ], ), +, - &  eof, ], ), +, - \\
+G & Ø & eof ], ), +, - &  eof, ], ), +, - \\
+G'& Ø & eof ], ), +, - &  eof, ], ), +, - \\
+A & Ø & eof ], ), +, -, [, .  &  eof, ], ), +, -, [, . \\
 \end{tabular}
 
 \subsubsection{FIRST+}
 \begin{tabular}{llll}
  Regel & first &  follow &  first+ \\
 \hline
- 1 & (, num, id & & (, num, id \\
- 2 & + & & + \\
- 3 & - & & - \\
- 4 & epsilon & eof, ], ) & eof, ], ) \\
- 5 & ( & & ( \\
- 6 & num, id & & (, num, id \\
- 7 & num, id & & (, num, id \\
- 8 & [ & & [ \\
- 9 & . & & . \\
-10 & epsilon & +, -, eof, ], ) & eof, +, -, ], ) \\
-11 & ( & & ( \\
-12 & num & & num \\
-13 & id & &  id \\
+$E  \rightarrow F E'           $ & (, num, id & & (, num, id \\
+$E' \rightarrow "+" F E'      $ & + & & + \\
+$E' \rightarrow "-" F E'      $ & - & & - \\
+$E' \rightarrow epsilon       $ & epsilon & eof, ], ) & eof, ], ) \\
+$F  \rightarrow "(" ID ")" F  $ & ( & & ( \\
+$F  \rightarrow G             $ & num, id & & (, num, id \\
+$G  \rightarrow A G'          $ & num, id & & (, num, id \\
+$G' \rightarrow "[" E "] G'   $ & [ & & [ \\
+$G' \rightarrow "." ID G'     $ & . & & . \\
+$G' \rightarrow epsilon       $ & epsilon & +, -, eof, ], ) & eof, +, -, ], ) \\
+$A  \rightarrow "(" E ")"      $ & ( & & ( \\
+$A  \rightarrow NUM            $ & num & & num \\
+$A  \rightarrow ID             $ & id & &  id \\
 \end{tabular}
