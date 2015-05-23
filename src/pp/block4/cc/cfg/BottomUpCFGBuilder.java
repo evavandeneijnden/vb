@@ -1,7 +1,11 @@
 package pp.block4.cc.cfg;
 
 import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.misc.NotNull;
+import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeProperty;
+import org.antlr.v4.runtime.tree.TerminalNode;
 import pp.block4.cc.ErrorListener;
 
 import java.io.File;
@@ -12,6 +16,8 @@ import java.io.IOException;
 public class BottomUpCFGBuilder extends FragmentBaseListener {
 	/** The CFG being built. */
 	private Graph graph;
+	private ParseTreeProperty<Node> entrances;
+	private ParseTreeProperty<Node> exits;
 
 	/** Builds the CFG for a program contained in a given file. */
 	public Graph build(File file) {
@@ -55,6 +61,47 @@ public class BottomUpCFGBuilder extends FragmentBaseListener {
 	private Node addNode(ParserRuleContext node, String text) {
 		return this.graph.addNode(node.getStart().getLine() + ": " + text);
 	}
+
+	@Override public void exitProgram(@NotNull FragmentParser.ProgramContext ctx) { }
+	@Override
+	public void exitDecl(@NotNull FragmentParser.DeclContext ctx) {
+		Node node = addNode(ctx,ctx.getText());
+		entrances.put(ctx, node);
+		exits.put(ctx,node);
+	}
+	@Override
+	public void exitAssignStat(@NotNull FragmentParser.AssignStatContext ctx) {
+		Node node = addNode(ctx,ctx.getText());
+		entrances.put(ctx, node);
+		exits.put(ctx,node);
+	}
+	@Override public void exitIfStat(@NotNull FragmentParser.IfStatContext ctx) { }
+	@Override public void exitWhileStat(@NotNull FragmentParser.WhileStatContext ctx) { }
+	@Override public void exitBlockStat(@NotNull FragmentParser.BlockStatContext ctx) { }
+	@Override
+	public void exitPrintStat(@NotNull FragmentParser.PrintStatContext ctx) {
+		Node node = addNode(ctx,ctx.getText());
+		entrances.put(ctx, node);
+		exits.put(ctx,node);
+	}
+
+	@Override public void exitBreakStat(@NotNull FragmentParser.BreakStatContext ctx) { }
+	@Override public void exitContStat(@NotNull FragmentParser.ContStatContext ctx) { }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	/** Main method to build and print the CFG of a simple Java program. */
 	public static void main(String[] args) {
