@@ -39,8 +39,9 @@ public class BottomUpCFGBuilder extends FragmentBaseListener {
             System.out.println(filename);
             try {
                 int i = 1;
-                for (String line : Files.readAllLines(Paths.get(filename)))
-                    System.out.println((i++)+"\t"+line);
+                for (String line : Files.readAllLines(Paths.get(filename))) {
+                    System.out.println((i++) + "\t" + line);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }

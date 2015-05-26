@@ -10,159 +10,217 @@ import pp.block4.cc.cfg.FragmentParser.ProgramContext;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
-/** Template top-down CFG builder. */
+/**
+ * Template top-down CFG builder.
+ */
 public class TopDownCFGBuilder extends FragmentBaseListener {
-	/** The CFG being built. */
-	private Graph graph;
+    /**
+     * The CFG being built.
+     */
+    private Graph graph;
 
-    private Map<ParseTree, Node> beginMap;
+    private Map<ParseTree, Set<ParseTree>> lastTrees;
+    private Map<ParseTree, ParseTree> beginMap;
+    private Map<ParseTree, Node> nodeMap;
     private Map<ParseTree, Set<Node>> exitMap;
+    private Map<ParseTree, Node> entryMap;
 
-	/** Builds the CFG for a program contained in a given file. */
-	public Graph build(File file) {
-		Graph result = null;
-		ErrorListener listener = new ErrorListener();
-		try {
-			CharStream chars = new ANTLRInputStream(new FileReader(file));
-			Lexer lexer = new FragmentLexer(chars);
-			lexer.removeErrorListeners();
-			lexer.addErrorListener(listener);
-			TokenStream tokens = new CommonTokenStream(lexer);
-			FragmentParser parser = new FragmentParser(tokens);
-			parser.removeErrorListeners();
-			parser.addErrorListener(listener);
-			ProgramContext tree = parser.program();
-			if (listener.hasErrors()) {
-				System.out.printf("Parse errors in %s:%n", file.getPath());
-				for (String error : listener.getErrors()) {
-					System.err.println(error);
-				}
-			} else {
-				result = build(tree);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
+    /**
+     * Main method to build and print the CFG of a simple Java program.
+     */
+    public static void main(String[] args) {
+        if (args.length == 0) {
+            System.err.println("Usage: [filename]+");
+            return;
+        }
+        TopDownCFGBuilder builder1 = new TopDownCFGBuilder();
+        BottomUpCFGBuilder builder2 = new BottomUpCFGBuilder();
+        for (String filename : args) {
+            System.out.println(filename);
+            try {
+                int i = 1;
+                for (String line : Files.readAllLines(Paths.get(filename))) {
+                    System.out.println((i++) + "\t" + line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Graph graph1 = builder1.build(new File(filename));
+            Graph graph2 = builder2.build(new File(filename));
+            System.out.println(graph1);
+            System.out.println(graph2);
+            System.out.println();
+        }
+    }
 
-	/** Builds the CFG for a program given as an ANTLR parse tree. */
-	public Graph build(ProgramContext tree) {
-		this.graph = new Graph();
+    /**
+     * Builds the CFG for a program contained in a given file.
+     */
+    public Graph build(File file) {
+        Graph result = null;
+        ErrorListener listener = new ErrorListener();
+        try {
+            CharStream chars = new ANTLRInputStream(new FileReader(file));
+            Lexer lexer = new FragmentLexer(chars);
+            lexer.removeErrorListeners();
+            lexer.addErrorListener(listener);
+            TokenStream tokens = new CommonTokenStream(lexer);
+            FragmentParser parser = new FragmentParser(tokens);
+            parser.removeErrorListeners();
+            parser.addErrorListener(listener);
+            ProgramContext tree = parser.program();
+            if (listener.hasErrors()) {
+                System.out.printf("Parse errors in %s:%n", file.getPath());
+                for (String error : listener.getErrors()) {
+                    System.err.println(error);
+                }
+            } else {
+                result = build(tree);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    /**
+     * Builds the CFG for a program given as an ANTLR parse tree.
+     */
+    public Graph build(ProgramContext tree) {
+        this.graph = new Graph();
         this.beginMap = new HashMap<>();
+        this.nodeMap = new HashMap<>();
         this.exitMap = new HashMap<>();
+        this.lastTrees = new HashMap<>();
+        this.entryMap = new HashMap<>();
         new ParseTreeWalker().walk(new MyListener(), tree);
         return graph;
-	}
+    }
 
-	/** Adds a node to he CGF, based on a given parse tree node.
-	 * Gives the CFG node a meaningful ID, consisting of line number and 
-	 * a further indicator.
-	 */
-	private Node addNode(ParserRuleContext node, String text) {
-		return this.graph.addNode(node.getStart().getLine() + ": " + text);
-	}
+    /**
+     * Adds a node to he CGF, based on a given parse tree node.
+     * Gives the CFG node a meaningful ID, consisting of line number and
+     * a further indicator.
+     */
+    private Node addNode(ParserRuleContext node, String text) {
+        return this.graph.addNode(node.getStart().getLine() + ": " + text);
+    }
 
     private Node addLonelyNode(ParserRuleContext node, String text) {
         Node result = addNode(node, text);
+        nodeMap.put(node, result);
 
-        beginMap.put(node, result);
+        ParseTree parent = beginMap.get(node);
+
+        if (parent != null) {
+            if (lastTrees.containsKey(parent)) {
+                followLastTrees(parent, result);
+            } else {
+                for (Node entry : exitMap.get(parent)) {
+                    entry.addEdge(result);
+                }
+            }
+        } else {
+            parent = node.getParent();
+            while (!nodeMap.containsKey(parent)) {
+                parent = parent.getParent();
+            }
+            nodeMap.get(parent).addEdge(result);
+        }
 
         Set<Node> temp = new HashSet<>();
         temp.add(result);
         exitMap.put(node, temp);
 
+        if (entryMap.containsKey(node)) {
+            result.addEdge(entryMap.get(node));
+        }
+
         return result;
     }
 
-	/** Main method to build and print the CFG of a simple Java program. */
-	public static void main(String[] args) {
-		if (args.length == 0) {
-			System.err.println("Usage: [filename]+");
-			return;
-		}
-		TopDownCFGBuilder builder = new TopDownCFGBuilder();
-		for (String filename : args) {
-			File file = new File(filename);
-			System.out.println(filename);
-			System.out.println(builder.build(file));
-		}
-	}
+    public void followLastTrees(ParseTree parent, Node node) {
+        for (ParseTree tree : lastTrees.get(parent)) {
+            if (parent != tree && lastTrees.containsKey(tree)) {
+                followLastTrees(tree, node);
+            } else {
+                for (Node exit : exitMap.get(tree)) {
+                    exit.addEdge(node);
+                }
+            }
+        }
+    }
 
     private class MyListener extends FragmentBaseListener {
         @Override
         public void enterProgram(@NotNull FragmentParser.ProgramContext ctx) {
-            exitMap.put(ctx,new HashSet<Node>());
+            exitMap.put(ctx, new HashSet<Node>());
+            linkStatements(ctx, ctx.children);
         }
 
         @Override
         public void enterDecl(@NotNull FragmentParser.DeclContext ctx) {
-            enterAssignStat(ctx, "Declare");
+            addLonelyNode(ctx, "Declare");
         }
 
         @Override
         public void enterAssignStat(@NotNull FragmentParser.AssignStatContext ctx) {
-            enterAssignStat(ctx, "Stat");
+            addLonelyNode(ctx, "Stat");
         }
 
-        private Node enterAssignStat(ParserRuleContext ctx, String text){
-            Node node = addLonelyNode(ctx, text);
-            ParseTree parent = ctx.getParent();
-
-            if (!beginMap.containsKey(parent)) {
-                beginMap.put(parent,node);
-            }
-
-            if (exitMap.containsKey(parent)) {
-                for (Node exit : exitMap.get(parent)) {
-                    exit.addEdge(node);
-                }
-            }
-
-            Set<Node> temp = new HashSet<>();
-            temp.add(node);
-            exitMap.put(parent,temp);
-            return node;
-        }
-
-        // ####################################
         @Override
         public void enterIfStat(@NotNull FragmentParser.IfStatContext ctx) {
-            Node node = addNode(ctx, "If");
+            addLonelyNode(ctx, "If");
 
-            beginMap.put(ctx, node);
+            Set<ParseTree> temp = new HashSet<>();
 
-            FragmentParser.StatContext ifStat = ctx.stat(0);
-            node.addEdge(beginMap.get(ifStat));
-            Set<Node> temp = new HashSet<>(exitMap.get(ifStat));
+//            beginMap.put(ctx.stat(0),ctx);
+            temp.add(ctx.stat(0));
 
             if (ctx.stat().size() > 1) {
-                FragmentParser.StatContext elseStat = ctx.stat(1);
-                node.addEdge(beginMap.get(elseStat));
-                temp.addAll(exitMap.get(elseStat));
+//                beginMap.put(ctx.stat(1),ctx);
+                temp.add(ctx.stat(1));
             } else {
-                temp.add(node);
+                temp.add(ctx);
             }
-            exitMap.put(ctx, temp);
+
+            lastTrees.put(ctx, temp);
+
+            if (entryMap.containsKey(ctx)) {
+                for (ParseTree last : temp) {
+                    entryMap.put(last, entryMap.get(ctx));
+                }
+            }
         }
 
         @Override
         public void enterWhileStat(@NotNull FragmentParser.WhileStatContext ctx) {
             Node node = addLonelyNode(ctx, "While");
-            node.addEdge(beginMap.get(ctx.stat()));
-            for (Node exit : exitMap.get(ctx.stat())) {
-                exit.addEdge(node);
-            }
+
+//            beginMap.put(ctx.stat(),ctx);
+
+            entryMap.put(ctx.stat(), node);
         }
 
         @Override
         public void enterBlockStat(@NotNull FragmentParser.BlockStatContext ctx) {
             if (ctx.stat().size() > 0) {
-                linkStatements(ctx, (new LinkedList<ParseTree>(ctx.stat())).iterator());
-            } else {
-                addLonelyNode(ctx, "NOP");
+                linkStatements(ctx, new LinkedList<ParseTree>(ctx.stat()));
+                beginMap.put(ctx.stat(0), beginMap.get(ctx));
+
+                ParseTree last = ctx.stat(ctx.stat().size() - 1);
+
+                Set<ParseTree> temp = new HashSet<>();
+                temp.add(last);
+                lastTrees.put(ctx, temp);
+
+                if (entryMap.containsKey(ctx)) {
+                    entryMap.put(last, entryMap.get(ctx));
+                }
             }
         }
 
@@ -185,27 +243,22 @@ public class TopDownCFGBuilder extends FragmentBaseListener {
         @Override
         public void enterContStat(@NotNull FragmentParser.ContStatContext ctx) {
             ParserRuleContext nodeAt = ctx.getParent();
-            ParserRuleContext last = nodeAt;
 
             while (!(nodeAt instanceof FragmentParser.WhileStatContext)) {
-                last = nodeAt;
                 nodeAt = nodeAt.getParent();
             }
 
-            exitMap.get(last).add(addLonelyNode(ctx, "Continue"));
+            nodeMap.get(nodeAt).addEdge(addLonelyNode(ctx, "Continue"));
         }
 
-        private void linkStatements(ParserRuleContext ctx, Iterator<ParseTree> iterator){
-            ParseTree next = iterator.next();
-            ParseTree last;
-            beginMap.put(ctx, beginMap.get(next));
+        private void linkStatements(ParserRuleContext ctx, Collection<ParseTree> collection) {
+            Iterator<ParseTree> iterator = collection.iterator();
+            ParseTree last = ctx;
             while (iterator.hasNext()) {
+                ParseTree next = iterator.next();
+                beginMap.put(next, last);
                 last = next;
-                next = iterator.next();
-                for (Node exit : exitMap.get(last))
-                    exit.addEdge(beginMap.get(next));
             }
-            exitMap.put(ctx, exitMap.get(next));
         }
     }
 }
