@@ -71,18 +71,8 @@ public class Graph implements Iterable<Node> {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (!(obj instanceof Graph)) {
-			return false;
-		}
-		Graph other = (Graph) obj;
-		if (!this.nodes.equals(other.nodes)) {
-			return false;
-		}
-		return true;
-	}
+        return this == obj || obj instanceof Graph && this.nodes.equals(((Graph) obj).nodes);
+    }
 
 	/** Builds a simple CFG and prints it out. */
 	public static void main(String[] args) {
