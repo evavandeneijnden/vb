@@ -238,6 +238,7 @@ public class TopDownCFGBuilder extends FragmentBaseListener {
             }
 
             exitMap.get(nodeAt).add(addLonelyNode(ctx, "Break"));
+            exitMap.put(ctx, new HashSet<Node>());
         }
 
         @Override
@@ -248,7 +249,8 @@ public class TopDownCFGBuilder extends FragmentBaseListener {
                 nodeAt = nodeAt.getParent();
             }
 
-            nodeMap.get(nodeAt).addEdge(addLonelyNode(ctx, "Continue"));
+            addLonelyNode(ctx, "Continue").addEdge(nodeMap.get(nodeAt));
+            exitMap.put(ctx, new HashSet<Node>());
         }
 
         private void linkStatements(ParserRuleContext ctx, Collection<ParseTree> collection) {
