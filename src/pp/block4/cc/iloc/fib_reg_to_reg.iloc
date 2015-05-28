@@ -1,0 +1,14 @@
+start:      loadI 1 => r_x
+            loadI 1 => r_y
+            loadI 1 -=> r_z
+            loadAI @n, r_arp => r_n
+
+while:      cmp_GT r_n, 1 => r_bool
+            cbr r_bool do_while don't_while
+
+do_while:   add z_x,z_y => z_x
+            i2i r_y => r_x
+            i2i r_z => r_y
+            sub r_n, 1 => r_n
+
+don't_while: out "Fibonacci: " + r_z

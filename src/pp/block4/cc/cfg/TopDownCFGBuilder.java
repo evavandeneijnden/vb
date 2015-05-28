@@ -41,14 +41,14 @@ public class TopDownCFGBuilder extends FragmentBaseListener {
         BottomUpCFGBuilder builder2 = new BottomUpCFGBuilder();
         for (String filename : args) {
             System.out.println(filename);
-            try {
-                int i = 1;
-                for (String line : Files.readAllLines(Paths.get(filename))) {
-                    System.out.println((i++) + "\t" + line);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                int i = 1;
+//                for (String line : Files.readAllLines(Paths.get(filename))) {
+//                    System.out.println((i++) + "\t" + line);
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
             Graph graph1 = builder1.build(new File(filename));
             Graph graph2 = builder2.build(new File(filename));
             System.out.println(graph1);

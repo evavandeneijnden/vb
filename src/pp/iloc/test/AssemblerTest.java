@@ -16,6 +16,7 @@ import pp.iloc.parse.FormatException;
 
 @SuppressWarnings("javadoc")
 public class AssemblerTest {
+
 	@Test
 	public void testFig13() {
 		Program p = parse("fig1-3");
