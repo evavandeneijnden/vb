@@ -13,7 +13,10 @@ import pp.block5.cc.ParseException;
 
 /** Prettyprints a (number, word)-sentence and sums up the numbers. */
 public class NumWordProcessor extends NumWordBaseVisitor<Integer> {
-	public static void main(String[] args) {
+	private int sum = 0;
+    private String text = "";
+
+    public static void main(String[] args) {
 		NumWordProcessor grouper = new NumWordProcessor();
 		if (args.length == 0) {
 			process(grouper, "1sock2shoes 3 holes");
@@ -58,10 +61,13 @@ public class NumWordProcessor extends NumWordBaseVisitor<Integer> {
     }
 
     @Override public Integer visitNumber(@NotNull NumWordParser.NumberContext ctx) {
+        sum += Integer.parseInt(ctx.getText());
+        text = text + ctx.getText() + " ";
         return visitChildren(ctx);
     }
 
     @Override public Integer visitWord(@NotNull NumWordParser.WordContext ctx) {
+        text = text + ctx.getText() + ", ";
         return visitChildren(ctx);
     }
 
