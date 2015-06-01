@@ -105,6 +105,11 @@ public class NumWordGroupParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof NumWordGroupListener ) ((NumWordGroupListener)listener).exitSentence(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof NumWordGroupVisitor ) return ((NumWordGroupVisitor<? extends T>)visitor).visitSentence(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final SentenceContext sentence() throws RecognitionException {
@@ -175,6 +180,11 @@ public class NumWordGroupParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof NumWordGroupListener ) ((NumWordGroupListener)listener).exitGroup(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof NumWordGroupVisitor ) return ((NumWordGroupVisitor<? extends T>)visitor).visitGroup(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final GroupContext group() throws RecognitionException {
@@ -218,6 +228,11 @@ public class NumWordGroupParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof NumWordGroupListener ) ((NumWordGroupListener)listener).exitPenultimateGroup(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof NumWordGroupVisitor ) return ((NumWordGroupVisitor<? extends T>)visitor).visitPenultimateGroup(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -263,6 +278,11 @@ public class NumWordGroupParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof NumWordGroupListener ) ((NumWordGroupListener)listener).exitLastGroup(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof NumWordGroupVisitor ) return ((NumWordGroupVisitor<? extends T>)visitor).visitLastGroup(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final LastGroupContext lastGroup() throws RecognitionException {
@@ -302,6 +322,11 @@ public class NumWordGroupParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof NumWordGroupListener ) ((NumWordGroupListener)listener).exitNumber(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof NumWordGroupVisitor ) return ((NumWordGroupVisitor<? extends T>)visitor).visitNumber(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final NumberContext number() throws RecognitionException {
@@ -338,6 +363,11 @@ public class NumWordGroupParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof NumWordGroupListener ) ((NumWordGroupListener)listener).exitWord(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof NumWordGroupVisitor ) return ((NumWordGroupVisitor<? extends T>)visitor).visitWord(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
