@@ -27,11 +27,12 @@ public class MaxILOCTest {
     public void MaxTest() {
         Program p = parse("max");
         Machine m = new Machine();
-        System.out.println(m.init("a", 1, 2, 3, 4, 5, 6));
-        m.setNum("alength", 6);
+        System.out.println(m.init("a", 1, 2, 3, 4, 5, 6,5,6,7,7,4,2,2,3));
+        m.setNum("alength", 12);
         Simulator sim = new Simulator(p, m);
         sim.run();
         System.out.println(m);
+        assertEquals(7,m.getReg("r_max"));
     }
 
     Program parse(String filename) {
