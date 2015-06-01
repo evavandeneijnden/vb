@@ -11,5 +11,4 @@ Begin
        sum := sum + i;
        i := i+1;
    End;
-
 End.
