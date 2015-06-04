@@ -5,7 +5,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeProperty;
 
 /** Class holding the results of the Simple Pascal checker. */
-public class Result {
+public class PassOneResult {
 	/** Mapping from statements and expressions to the atomic
 	 * subtree that is their entry in the control flow graph. */
 	private final ParseTreeProperty<ParserRuleContext> entries = new ParseTreeProperty<>();

@@ -4,7 +4,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.junit.Test;
 import pp.block5.cc.ParseException;
 import pp.block5.cc.SimplePascalCompiler;
-import pp.block5.cc.simple.Result;
+import pp.block5.cc.simple.PassOneResult;
 import pp.block5.cc.simple.Type;
 
 import java.io.File;
@@ -23,30 +23,30 @@ public class SimpleCheckerTest {
 	@Test
 	public void testBasicTypes() throws IOException, ParseException {
 		ParseTree tree = parse("basic");
-		Result result = check(tree);
+		PassOneResult passOneResult = check(tree);
 		ParseTree body = tree.getChild(3).getChild(1);
 		ParseTree assX = body.getChild(1);
-		assertEquals(Type.INT, result.getType(assX.getChild(0)));
-		assertEquals(Type.INT, result.getType(assX.getChild(2)));
+		assertEquals(Type.INT, passOneResult.getType(assX.getChild(0)));
+		assertEquals(Type.INT, passOneResult.getType(assX.getChild(2)));
 	}
 
 	@Test
 	public void testBasicEntries() throws IOException, ParseException {
 		ParseTree tree = parse("basic");
-		Result result = check(tree);
+		PassOneResult passOneResult = check(tree);
 		ParseTree body = tree.getChild(3).getChild(1);
 		ParseTree assX = body.getChild(1);
-		assertEquals(assX.getChild(2), result.getEntry(assX));
-		assertEquals(assX.getChild(2), result.getEntry(body));
+		assertEquals(assX.getChild(2), passOneResult.getEntry(assX));
+		assertEquals(assX.getChild(2), passOneResult.getEntry(body));
 	}
 
 	@Test
 	public void testBasicOffsets() throws IOException, ParseException {
 		ParseTree tree = parse("basic");
-		Result result = check(tree);
+		PassOneResult passOneResult = check(tree);
 		ParseTree body = tree.getChild(3).getChild(1);
 		ParseTree assX = body.getChild(1);
-		assertEquals(0, result.getOffset(assX.getChild(0)));
+		assertEquals(0, passOneResult.getOffset(assX.getChild(0)));
 	}
 
 	@Test
@@ -78,7 +78,7 @@ public class SimpleCheckerTest {
 		return this.compiler.parse(new File(BASE_DIR, filename + EXT));
 	}
 
-	private Result check(ParseTree tree) throws ParseException {
+	private PassOneResult check(ParseTree tree) throws ParseException {
 		return this.compiler.check(tree);
 	}
 }

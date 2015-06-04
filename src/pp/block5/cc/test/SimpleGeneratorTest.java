@@ -23,8 +23,8 @@ public class SimpleGeneratorTest {
 	@Test
 	public void testGCD() throws IOException, ParseException {
 		Program prog = compile("gcd");
-		String out = sim(prog, "3\n8");
-		assertEquals("Greatest common divisor: 1", out.trim());
+        String out = sim(prog, "3\n8");
+        assertEquals("Greatest common divisor: 1", out.trim());
 		out = sim(prog, "435\n1935");
 		assertEquals("Greatest common divisor: 15", out.trim());
 	}
@@ -33,7 +33,7 @@ public class SimpleGeneratorTest {
 	public void testPrime() throws IOException, ParseException {
 		Program prog = compile("prime");
 		String out = sim(prog, "365");
-		assertEquals("Divisor: 5", out.trim());
+        assertEquals("Divisor: 5", out.trim());
 		out = sim(prog, "367");
 		assertEquals("Is prime 0", out.trim());
 	}

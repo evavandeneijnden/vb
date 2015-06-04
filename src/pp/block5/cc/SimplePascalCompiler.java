@@ -6,7 +6,7 @@ import pp.block5.cc.pascal.SimplePascalLexer;
 import pp.block5.cc.pascal.SimplePascalParser;
 import pp.block5.cc.simple.Checker;
 import pp.block5.cc.simple.Generator;
-import pp.block5.cc.simple.Result;
+import pp.block5.cc.simple.PassOneResult;
 import pp.iloc.Simulator;
 import pp.iloc.model.Program;
 
@@ -58,17 +58,17 @@ public class SimplePascalCompiler {
 	}
 
 	/** Typechecks a given Simple Pascal string. */
-	public Result check(String text) throws ParseException {
+	public PassOneResult check(String text) throws ParseException {
 		return check(parse(text));
 	}
 
 	/** Typechecks a given Simple Pascal file. */
-	public Result check(File file) throws ParseException, IOException {
+	public PassOneResult check(File file) throws ParseException, IOException {
 		return check(parse(file));
 	}
 
 	/** Typechecks a given Simple Pascal parse tree. */
-	public Result check(ParseTree tree) throws ParseException {
+	public PassOneResult check(ParseTree tree) throws ParseException {
 		return this.checker.check(tree);
 	}
 
@@ -84,8 +84,8 @@ public class SimplePascalCompiler {
 
 	/** Compiles a given Simple Pascal parse tree into an ILOC program. */
 	public Program compile(ParseTree tree) throws ParseException {
-		Result checkResult = this.checker.check(tree);
-		return this.generator.generate(tree, checkResult);
+		PassOneResult checkPassOneResult = this.checker.check(tree);
+		return this.generator.generate(tree, checkPassOneResult);
 	}
 
 	/** Compiles a given Simple Pascal string into a parse tree. */

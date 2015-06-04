@@ -20,7 +20,7 @@ public class Checker extends SimplePascalBaseListener {
     /**
      * Result of the latest call of {@link #check}.
      */
-    private Result result;
+    private PassOneResult passOneResult;
     /**
      * Variable scope for the latest call of {@link #check}.
      */
@@ -36,15 +36,15 @@ public class Checker extends SimplePascalBaseListener {
      *
      * @throws ParseException if an error was found during checking.
      */
-    public Result check(ParseTree tree) throws ParseException {
+    public PassOneResult check(ParseTree tree) throws ParseException {
         this.scope = new Scope();
-        this.result = new Result();
+        this.passOneResult = new PassOneResult();
         this.errors = new ArrayList<>();
         new ParseTreeWalker().walk(this, tree);
         if (hasErrors()) {
             throw new ParseException(getErrors());
         }
-        return this.result;
+        return this.passOneResult;
     }
 
     // Override the listener methods for the statement nodes
@@ -283,21 +283,21 @@ public class Checker extends SimplePascalBaseListener {
      * Convenience method to add an offset to the result.
      */
     private void setOffset(ParseTree node, Integer offset) {
-        this.result.setOffset(node, offset);
+        this.passOneResult.setOffset(node, offset);
     }
 
     /**
      * Convenience method to add a type to the result.
      */
     private void setType(ParseTree node, Type type) {
-        this.result.setType(node, type);
+        this.passOneResult.setType(node, type);
     }
 
     /**
      * Returns the type of a given expression or type node.
      */
     private Type getType(ParseTree node) {
-        return this.result.getType(node);
+        return this.passOneResult.getType(node);
     }
 
     /**
@@ -307,13 +307,13 @@ public class Checker extends SimplePascalBaseListener {
         if (entry == null) {
             throw new IllegalArgumentException("Null flow graph entry");
         }
-        this.result.setEntry(node, entry);
+        this.passOneResult.setEntry(node, entry);
     }
 
     /**
      * Returns the flow graph entry of a given expression or statement.
      */
     private ParserRuleContext entry(ParseTree node) {
-        return this.result.getEntry(node);
+        return this.passOneResult.getEntry(node);
     }
 }
