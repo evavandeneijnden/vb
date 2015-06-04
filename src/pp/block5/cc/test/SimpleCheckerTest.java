@@ -26,7 +26,6 @@ public class SimpleCheckerTest {
 		Result result = check(tree);
 		ParseTree body = tree.getChild(3).getChild(1);
 		ParseTree assX = body.getChild(1);
-		System.out.println("int: "+assX.getText());
 		assertEquals(Type.INT, result.getType(assX.getChild(0)));
 		assertEquals(Type.INT, result.getType(assX.getChild(2)));
 	}
@@ -47,7 +46,6 @@ public class SimpleCheckerTest {
 		Result result = check(tree);
 		ParseTree body = tree.getChild(3).getChild(1);
 		ParseTree assX = body.getChild(1);
-		System.out.println("assx: "+assX.getChild(0).getText()+"  "+assX.getChild(0));
 		assertEquals(0, result.getOffset(assX.getChild(0)));
 	}
 

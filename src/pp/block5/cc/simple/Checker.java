@@ -1,19 +1,17 @@
 package pp.block5.cc.simple;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
-
 import org.antlr.v4.runtime.tree.TerminalNode;
 import pp.block5.cc.ParseException;
-import pp.block5.cc.pascal.ArrayPascalParser;
 import pp.block5.cc.pascal.SimplePascalBaseListener;
 import pp.block5.cc.pascal.SimplePascalParser;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class to type check and calculate flow entries and variable offsets.
@@ -147,7 +145,7 @@ public class Checker extends SimplePascalBaseListener {
 
     @Override
     public void exitVarDecl(@NotNull SimplePascalParser.VarDeclContext ctx) {
-        setEntry(ctx, entry(ctx.var(0)));
+        setEntry(ctx, ctx);
     }
 
     @Override
@@ -157,33 +155,41 @@ public class Checker extends SimplePascalBaseListener {
         for (TerminalNode id : ctx.ID()) {
             if (this.scope.put(id.getText(), getType(ctx.type()))) {
                 setOffset(id, this.scope.offset(id.getText()));
-                System.out.println(id + ": " + this.scope.offset(id.getText()));
             } else {
                 addError(ctx, "This variable has already been declared");
             }
-            System.out.println("test");
         }
     }
 
     @Override
+    public void exitIdTarget(@NotNull SimplePascalParser.IdTargetContext ctx) {
+        setType(ctx,this.scope.type(ctx.ID().getText()));
+        setOffset(ctx,this.scope.offset(ctx.ID().getText()));
+        setEntry(ctx,ctx);
+    }
+
+    @Override
     public void exitAssStat(@NotNull SimplePascalParser.AssStatContext ctx) {
-        checkType(ctx.expr(), this.scope.type(ctx.target().getText()));
-        setType(ctx, getType(ctx.expr()));
+        Type var_type = getType(ctx.target());
+        checkType(ctx.expr(), var_type);
+        setType(ctx, var_type);
+        setType(ctx.target(), var_type);
         setEntry(ctx, entry(ctx.expr()));
+        setOffset(ctx, this.scope.offset(ctx.target().getText()));
     }
 
     @Override
     public void exitIfStat(@NotNull SimplePascalParser.IfStatContext ctx) {
         checkType(ctx.expr(), Type.BOOL);
-        for (ParseTree entry : ctx.stat()) {
-            setEntry(ctx, entry(entry));
+        for (ParserRuleContext temp : ctx.stat()) {
+            setEntry(ctx, temp);
         }
     }
 
     @Override
     public void exitWhileStat(@NotNull SimplePascalParser.WhileStatContext ctx) {
         checkType(ctx.expr(), Type.BOOL);
-        setEntry(ctx, entry(ctx.stat()));
+        setEntry(ctx, ctx.stat());
     }
 
     @Override
@@ -193,7 +199,7 @@ public class Checker extends SimplePascalBaseListener {
 
     @Override
     public void exitBlock(@NotNull SimplePascalParser.BlockContext ctx) {
-        setEntry(ctx, ctx.stat(0));
+        setEntry(ctx, entry(ctx.stat(0)));
     }
 
     @Override
@@ -211,6 +217,10 @@ public class Checker extends SimplePascalBaseListener {
         setEntry(ctx, ctx);
     }
 
+    @Override
+    public void exitBody(@NotNull SimplePascalParser.BodyContext ctx) {
+        setEntry(ctx, ctx);
+    }
 
     /**
      * Indicates if any errors were encountered in this tree listener.
