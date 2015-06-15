@@ -13,7 +13,7 @@
 // '------------------------'
 
 // 2.
-// The ARs will be placed on a stack
+// The ARs will be placed on a stack, since we must support recursive calls and do no need a non linear scope.
 
 // 3.
 // see code below

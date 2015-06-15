@@ -1,16 +1,10 @@
 package pp.iloc.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import pp.iloc.model.Num.NumKind;
 import pp.iloc.model.Operand.Type;
 import pp.iloc.parse.FormatException;
+
+import java.util.*;
 
 /** ILOC program.
  * @author Arend Rensink
@@ -26,7 +20,7 @@ public class Program {
 	/** Mapping from labels defined in the program to corresponding
 	 * index locations.
 	 */
-	private final Map<Label, Integer> labelMap;
+	public final Map<Label, Integer> labelMap;
 	/** (Partial) mapping from symbolic constants used in the program
 	 * to corresponding numeric values. */
 	private final Map<Num, Integer> symbMap;
@@ -92,7 +86,7 @@ public class Program {
 
 	/** Assigns a fixed numeric value to a symbolic constant.
 	 * It is an error to assign to the same constant twice.
-	 * @param name constant name, without preceding '@'
+	 * @param symb constant name, without preceding '@'
 	 */
 	public void setSymb(Num symb, int value) {
 		if (this.symbMap.containsKey(symb)) {
