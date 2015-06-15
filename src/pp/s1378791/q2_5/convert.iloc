@@ -1,0 +1,58 @@
+// AR used:
+// ,------------------------,
+// | Previous arp           |
+// |------------------------|
+// | Return address         |
+// |------------------------|
+// | Argument 'num'         |
+// |------------------------|
+// | Argument 'base'        |
+// |------------------------|
+// | Return value           |
+// '------------------------'
+
+
+                loadI   0                   => r_zero       // initialise the zero register
+                i2i     sp                  => r_arp        // initialise the ar pointer
+
+                in      "Number? "          => r_number
+                in      "Base? "            => r_base
+                push    r_zero                              // result
+                push    r_base                              // argument base
+                push    r_number                            // argument number
+                loadI   #end_program        => r_1
+                push    r_1                                 // return address
+                push    r_arp                               // previous arp
+                subI    r_arp, 20           => r_arp
+convert:        loadAI  r_arp, 12           => r_base       // load base
+                loadAI  r_arp, 8            => r_number     // load number
+
+                div     r_number, r_base    => r_rest
+                mult    r_base, r_rest      => r_temp
+                sub     r_number, r_temp    => r_temp
+                out     "Next digit: ", r_temp
+
+                cmp_EQ  r_rest, r_zero      => r_if
+                cbr     r_if                -> then, else   // rest == 0
+then:           loadI   1                   => r_return     // return 1
+                jumpI                       -> end_if       // return to the end of the if
+else:           push    r_zero                              // result
+                push    r_base                              // argument base
+                push    r_rest                              // argument number
+                loadI   #return             => r_1
+                push    r_1                                 // return address
+                push    r_arp                               // previous arp
+                subI    r_arp, 20           => r_arp        // set the arp to the new value (equals 'sp')
+                jumpI                       -> convert      // first call to fib in fib
+return:         loadAI  r_arp, -4           => r_return
+                addI    r_return, 1         => r_return
+end_if:         pop                         => r_arp        // previous arp
+                pop                         => r_return_to  // return address
+                pop                         => r_null       // argument number
+                pop                         => r_null       // argument base
+                store   r_return            => sp
+                pop                         => r_null       // result
+                jump                        -> r_return_to
+
+end_program:    loadAI  r_arp, -4           => r_result
+                out     "Length: ", r_result
