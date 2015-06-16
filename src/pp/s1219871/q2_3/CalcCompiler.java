@@ -1,20 +1,17 @@
-package pp.homework.q2_3;
+package pp.s1219871.q2_3;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.TokenStream;
+import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
-import pp.homework.ErrorListener;
+import pp.iloc.model.*;
+import pp.s1219871.ErrorListener;
 import pp.iloc.Simulator;
-import pp.iloc.model.Op;
-import pp.iloc.model.OpCode;
-import pp.iloc.model.Operand;
-import pp.iloc.model.Program;
-import pp.iloc.model.Reg;
 
 /** Compiler from Calc.g4 to stack-based ILOC. */
 public class CalcCompiler extends CalcBaseListener {
@@ -71,7 +68,36 @@ public class CalcCompiler extends CalcBaseListener {
 		return this.prog;
 	}
 
-	// Override the listener methods
+	@Override
+	public void exitMinus(@NotNull CalcParser.MinusContext ctx) {
+		emit(OpCode.pop,reg1);
+		emit(OpCode.rsubI, reg1, new Num(0), reg1);
+		emit(OpCode.push, reg1);
+	}
+
+	@Override
+	public void exitNumber(@NotNull CalcParser.NumberContext ctx) {
+		emit(OpCode.loadI,new Num(Integer.parseInt(ctx.NUMBER().getText())), reg1);
+		emit(OpCode.push, reg1);
+	}
+
+	@Override
+	public void exitTimes(@NotNull CalcParser.TimesContext ctx) {
+		emit(OpCode.pop, reg1);
+		emit(OpCode.pop, reg2);
+		emit(OpCode.mult, reg1, reg2, reg1);
+		emit(OpCode.push, reg1);
+	}
+
+	@Override
+	public void exitPlus(@NotNull CalcParser.PlusContext ctx) {
+		emit(OpCode.pop, reg1);
+		emit(OpCode.pop, reg2);
+		emit(OpCode.add, reg1, reg2, reg1);
+		emit(OpCode.push, reg1);
+	}
+
+
 
 	/** Constructs an operation from the parameters 
 	 * and adds it to the program under construction. */
