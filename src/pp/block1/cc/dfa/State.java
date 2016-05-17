@@ -7,6 +7,15 @@ import java.util.TreeMap;
  * State of a DFA.
  */
 public class State {
+	/** State number */
+	private final int nr;
+
+	/** Flag indicating if this state is accepting. */
+	private final boolean accepting;
+
+	/** Mapping to next states. */
+	private final Map<Character, State> next;
+
 	/**
 	 * Constructs a new, possibly accepting state with a given number. The
 	 * number is meant to identify the state, but there is no check for
@@ -20,19 +29,13 @@ public class State {
 
 	/** Returns the state number. */
 	public int getNumber() {
-		return nr;
+		return this.nr;
 	}
-
-	/** State number */
-	private final int nr;
 
 	/** Indicates if the state is accepting. */
 	public boolean isAccepting() {
-		return accepting;
+		return this.accepting;
 	}
-
-	/** Flag indicating if this state is accepting. */
-	private final boolean accepting;
 
 	/**
 	 * Adds an outgoing transition to a next state. This overrides any previous
@@ -52,23 +55,20 @@ public class State {
 	 * character.
 	 */
 	public State getNext(Character c) {
-		return next.get(c);
+		return this.next.get(c);
 	}
-
-	/** Mapping to next states. */
-	private final Map<Character, State> next;
 
 	@Override
 	public String toString() {
 		String trans = "";
-		for (Map.Entry<Character, State> out : next.entrySet()) {
+		for (Map.Entry<Character, State> out : this.next.entrySet()) {
 			if (!trans.isEmpty()) {
 				trans += ", ";
 			}
 			trans += "--" + out.getKey() + "-> " + out.getValue().getNumber();
 		}
-		return String.format("State %d (%s) with outgoing transitions %s", nr,
-				accepting ? "accepting" : "not accepting", trans);
+		return String.format("State %d (%s) with outgoing transitions %s",
+				this.nr, this.accepting ? "accepting" : "not accepting", trans);
 	}
 
 	static final public State ID6_DFA;
@@ -79,7 +79,7 @@ public class State {
 		State id63 = new State(3, false);
 		State id64 = new State(4, false);
 		State id65 = new State(5, false);
-		State id66 = new State(5, true);
+		State id66 = new State(6, true);
 		State[] states = { ID6_DFA, id61, id62, id63, id64, id65, id66 };
 		for (char c = 'a'; c < 'z'; c++) {
 			for (int s = 0; s < states.length - 1; s++) {
@@ -96,45 +96,5 @@ public class State {
 				states[s].addNext(c, states[s + 1]);
 			}
 		}
-	}
-	static final public State DFA_LALA;
-	static {
-		DFA_LALA = new State(1,true);
-		State la1_1 = new State(11,false);
-		State la1_2 = new State(12,true);
-		State la1_3 = new State(13,true);
-		State la2_1 = new State(21,false);
-		State la2_2 = new State(22,true);
-		State la2_3 = new State(23,true);
-		State la3_1 = new State(31,false);
-		State la3_2 = new State(32,false);
-		State la3_3 = new State(33,false);
-		State li1 = new State(51,false);
-		State li2 = new State(52,true);
-
-		DFA_LALA.addNext('L',la1_1);
-		la1_1.addNext('a',la1_2);
-		la1_2.addNext('a',la1_2);
-		la1_2.addNext(' ',la1_3);
-		la1_3.addNext(' ',la1_3);
-		la1_2.addNext('L',la2_1);
-		la1_3.addNext('L',la2_1);
-
-		la2_1.addNext('a',la2_2);
-		la2_2.addNext('a',la2_2);
-		la2_2.addNext(' ',la2_3);
-		la2_3.addNext(' ',la2_3);
-		la2_2.addNext('L',la3_1);
-		la2_3.addNext('L',la3_1);
-
-		la3_1.addNext('a',la3_2);
-		la3_2.addNext('a',la3_2);
-		la3_2.addNext(' ',la3_3);
-		la3_3.addNext(' ',la3_3);
-		la3_2.addNext('L',li1);
-		la3_3.addNext('L',li1);
-
-		li1.addNext('i',li2);
-		li2.addNext(' ',li2);
 	}
 }
