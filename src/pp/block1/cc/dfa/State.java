@@ -97,4 +97,51 @@ public class State {
 			}
 		}
 	}
+	static final public State DFA_LALA;
+	static {
+		DFA_LALA = new State(0, false);
+		State state1 = new State(1, false);
+		State state2 = new State(2, true);
+		State state3 = new State(3, false);
+		State state4 = new State(4, false);
+		State state5 = new State(5, true);
+		State state6 = new State(6, false);
+		State state7 = new State(7, false);
+		State state8 = new State(8, false);
+		State state9 = new State(9, false);
+		State state10 = new State(10, true);
+
+		State[] states = {DFA_LALA, state1, state2, state3, state4, state5, state6, state7, state8, state9, state10};
+
+		DFA_LALA.addNext('L', state1);
+
+		state1.addNext('a', state2);
+
+		state2.addNext('a', state2);
+		state2.addNext(' ', state3);
+        state2.addNext('L', state4);
+
+		state3.addNext(' ', state3);
+		state3.addNext('L', state4);
+
+		state4.addNext('a', state5);
+
+		state5.addNext('a', state5);
+		state5.addNext(' ', state6);
+        state5.addNext('L', state7);
+
+		state6.addNext(' ', state6);
+		state6.addNext('L', state7);
+
+		state7.addNext('a', state8);
+
+		state8.addNext('a', state8);
+		state8.addNext('L', state9);
+
+		state9.addNext('i', state10);
+
+		state7.addNext('i', state8);
+
+		state8.addNext(' ', state8);
+	}
 }
