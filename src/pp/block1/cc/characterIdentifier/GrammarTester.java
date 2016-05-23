@@ -1,7 +1,6 @@
 package pp.block1.cc.characterIdentifier;
 
 import org.junit.Test;
-import pp.block1.cc.antlr.Example;
 import pp.block1.cc.antlr.LexerTester;
 
 /**
