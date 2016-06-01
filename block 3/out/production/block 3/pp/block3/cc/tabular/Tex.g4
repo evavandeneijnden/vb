@@ -1,7 +1,5 @@
 grammar Tex;
 
-@header{package pp.block3.cc.tabular;}
-
 table   : WS? beginTable row+ endTable WS?;
 
 beginTable : BS BEGIN LB TABULAR RB LB ARGUMENT RB WS;

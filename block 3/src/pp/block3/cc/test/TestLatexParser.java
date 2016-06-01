@@ -1,11 +1,11 @@
 package pp.block3.cc.test;
 
 import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.misc.Interval;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.junit.Test;
-import pp.block3.cc.tabular.TexLexer;
-import pp.block3.cc.tabular.TexParser;
 import pp.block3.cc.tabular.MyListener;
+import pp.block3.cc.tabular.*;
 
 import java.io.IOException;
 import static org.junit.Assert.assertEquals;
@@ -45,6 +45,7 @@ public class TestLatexParser {
         parser.removeErrorListeners();
         parser.addErrorListener(myListenerParser);
         ParseTree pt = parser.table();
-        assertEquals("Lexer: "+myListenerLexer.getErrors().toString()+" Parser: "+myListenerParser.getErrors().toString(),succeeds,myListenerLexer.getErrors().isEmpty()&&myListenerParser.getErrors().isEmpty());
+
+        assertEquals(succeeds, myListenerLexer.getErrors().isEmpty()&&myListenerParser.getErrors().isEmpty());
     }
 }
