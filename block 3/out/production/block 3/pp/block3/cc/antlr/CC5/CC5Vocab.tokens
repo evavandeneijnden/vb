@@ -1,0 +1,10 @@
+MINUS=1
+POWER=2
+LPAR=3
+RPAR=4
+NUMBER=5
+WS=6
+'-'=1
+'^'=2
+'('=3
+')'=4
