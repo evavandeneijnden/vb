@@ -21,7 +21,7 @@ public class FindTest {
 
 	@Test(timeout = 1000)
 	public void simulate() {
-		Program p = assemble("./src/pp/block4/cc/fib");
+		Program p = assemble("./src/pp/block4/cc/iloc/find");
         if (p != null) {
             if (SHOW) {
                 System.out.println(p.prettyPrint());

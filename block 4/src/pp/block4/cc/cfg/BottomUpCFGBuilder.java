@@ -37,14 +37,6 @@ public class BottomUpCFGBuilder extends FragmentBaseListener {
         for (String filename : args) {
             File file = new File(filename);
             System.out.println(filename);
-//            try {
-//                int i = 1;
-//                for (String line : Files.readAllLines(Paths.get(filename))) {
-//                    System.out.println((i++) + "\t" + line);
-//                }
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
             System.out.println(builder.build(file));
         }
     }
@@ -91,7 +83,7 @@ public class BottomUpCFGBuilder extends FragmentBaseListener {
     }
 
     /**
-     * Adds a node to he CGF, based on a given parse tree node.
+     * Adds a node to he CFG, based on a given parse tree node.
      * Gives the CFG node a meaningful ID, consisting of line number and
      * a further indicator.
      */

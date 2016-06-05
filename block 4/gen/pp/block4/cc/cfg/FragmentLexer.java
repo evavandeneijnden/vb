@@ -1,6 +1,5 @@
 // Generated from C:/Users/Eva/Documents/vb/block 4/src/pp/block4/cc/cfg\Fragment.g4 by ANTLR 4.5.1
 package pp.block4.cc.cfg;
-package pp.block4.cc.cfg;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;
