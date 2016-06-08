@@ -1,0 +1,14 @@
+ARGUMENT=1
+COMMENT=2
+WS=3
+BS=4
+LB=5
+RB=6
+AND=7
+TABULAR=8
+BEGIN=9
+END=10
+ENTRY=11
+'tabular'=8
+'begin'=9
+'end'=10

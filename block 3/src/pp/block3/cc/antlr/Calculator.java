@@ -21,7 +21,7 @@ public class Calculator extends CalcBaseListener {
 	}
 
 	@Override
-	public void exitMinus(@NotNull CalcParser.MinusContext ctx) {set(ctx,0 -val(ctx.expr()));}
+	public void exitMinus(@NotNull CalcParser.MinusContext ctx) {set(ctx,-val(ctx.expr()));}
 
 	@Override
 	public void exitNumber(NumberContext ctx) {
